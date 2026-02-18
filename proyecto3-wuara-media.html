@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Proyecto - Wuara Media</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a0f;
+  --surface: #111118;
+  --surface2: #1a1a24;
+  --surface3: #20202e;
+  --border: #2a2a3a;
+  --border2: #353548;
+  --accent: #dc2626;
+  --accent2: #991b1b;
+  --accent-glow: rgba(220,38,38,0.15);
+  --text: #e8e8f0;
+  --muted: #7a7a9a;
+  --success: #06a77d;
+  --warning: #f77f00;
+  --blue: #4f8ef7;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 90% 5%, rgba(220,38,38,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 5% 95%, rgba(153,27,27,0.07) 0%, transparent 60%);
+}
+
+.project-card {
+  width: 100%;
+  max-width: 900px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  background: linear-gradient(135deg, #0d0505 0%, #1a0808 50%, #0d0505 100%);
+  padding: 3rem 3rem 2rem;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(220,38,38,0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(153,27,27,0.18) 0%, transparent 60%);
+}
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(220,38,38,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(220,38,38,0.07) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.hero-content { position: relative; z-index: 1; }
+
+.project-number {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.project-number::before { content:''; display:inline-block; width:24px; height:2px; background: var(--accent); }
+
+.hero-title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: .75rem;
+  background: linear-gradient(135deg, #fff 40%, #dc2626 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-subtitle { font-size: 1rem; color: var(--muted); max-width: 540px; line-height: 1.6; margin-bottom: 2rem; }
+
+.status-bar { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .78rem;
+  font-weight: 600;
+  padding: .35rem .9rem;
+  border-radius: 50px;
+  border: 1px solid;
+}
+.badge-live { background: rgba(6,167,125,0.1); border-color: rgba(6,167,125,0.4); color: var(--success); }
+.badge-live::before { content:''; width:7px; height:7px; border-radius:50%; background: var(--success); animation: pulse 2s infinite; }
+.badge-wip { background: rgba(247,127,0,0.1); border-color: rgba(247,127,0,0.4); color: #f77f00; }
+.badge-wip::before { content:''; width:7px; height:7px; border-radius:50%; background: #f77f00; animation: pulse 1.5s infinite; }
+.badge-type { background: rgba(220,38,38,0.1); border-color: rgba(220,38,38,0.3); color: #f87171; }
+.badge-role { background: rgba(153,27,27,0.15); border-color: rgba(153,27,27,0.4); color: #fca5a5; }
+
+@keyframes pulse { 0%, 100% { opacity:1; } 50% { opacity:.3; } }
+
+/* ── WIP BANNER ── */
+.wip-banner {
+  background: linear-gradient(90deg, rgba(247,127,0,0.08), rgba(247,127,0,0.14), rgba(247,127,0,0.08));
+  border-top: 1px solid rgba(247,127,0,0.3);
+  border-bottom: 1px solid rgba(247,127,0,0.3);
+  padding: .8rem 3rem;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  font-size: .8rem;
+  color: #f77f00;
+  font-weight: 600;
+}
+.wip-dot { width: 8px; height: 8px; border-radius:50%; background: #f77f00; animation: pulse 1.5s infinite; flex-shrink: 0; }
+
+/* ── BODY ── */
+.card-body { padding: 2.5rem 3rem; }
+
+.description {
+  font-size: .95rem;
+  color: rgba(232,232,240,0.8);
+  line-height: 1.75;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-title {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.2rem;
+}
+
+/* ── FEATURES ── */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: .75rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  padding: .9rem 1rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color .2s, background .2s;
+}
+.feature-item:hover { border-color: var(--accent); background: var(--surface3); }
+.feature-item.wip { border-style: dashed; opacity: .75; }
+.feature-item.wip:hover { border-color: #f77f00; opacity: 1; }
+.feature-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: .05rem; }
+.feature-text strong { display: block; font-size: .82rem; font-weight: 600; color: var(--text); margin-bottom: .15rem; }
+.feature-text span { font-size: .75rem; color: var(--muted); line-height: 1.5; }
+.wip-tag {
+  display: inline-block;
+  font-size: .6rem;
+  font-weight: 700;
+  padding: .1rem .4rem;
+  border-radius: 4px;
+  background: rgba(247,127,0,0.15);
+  color: #f77f00;
+  margin-left: .4rem;
+  vertical-align: middle;
+  letter-spacing: .05em;
+}
+
+/* ── DASHBOARD SECTION ── */
+.dashboard-section {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.dashboard-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: .75rem; }
+.dash-col {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.25rem;
+}
+.dash-col-title { font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: .85rem; }
+.dash-feature-list { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+.dash-feature-list li { display: flex; align-items: flex-start; gap: .5rem; font-size: .8rem; color: rgba(232,232,240,0.8); line-height: 1.4; }
+.dash-bullet { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 5px; }
+
+/* ── BACKEND SECTION ── */
+.backend-section {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.backend-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .75rem; margin-top: .75rem; }
+.backend-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  padding: 1rem;
+}
+.backend-item-title { font-size: .8rem; font-weight: 600; color: var(--text); margin-bottom: .3rem; }
+.backend-item-desc { font-size: .72rem; color: var(--muted); line-height: 1.5; }
+
+/* ── ARCHITECTURE ── */
+.arch-section { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.arch-flow { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; padding: 1.2rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; }
+.arch-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3rem;
+  padding: .75rem 1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: .7rem;
+  text-align: center;
+  min-width: 80px;
+}
+.arch-node span:first-child { font-size: 1.2rem; }
+.arch-node strong { font-size: .72rem; color: var(--text); }
+.arch-node small { color: var(--muted); font-size: .62rem; }
+.arch-arrow { color: var(--muted); font-size: .9rem; flex-shrink: 0; }
+
+/* ── TECH STACK ── */
+.tech-section { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.tech-groups { display: flex; flex-direction: column; gap: 1rem; }
+.tech-group { display: flex; align-items: flex-start; gap: 1rem; }
+.tech-group-label {
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--muted);
+  min-width: 90px;
+  padding-top: .3rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.tech-pills { display: flex; flex-wrap: wrap; gap: .5rem; }
+.pill { font-size: .75rem; font-weight: 500; padding: .3rem .8rem; border-radius: 6px; border: 1px solid; }
+.pill-red { background: rgba(220,38,38,0.1); border-color: rgba(220,38,38,0.3); color: #f87171; }
+.pill-blue { background: rgba(0,78,137,0.15); border-color: rgba(0,78,137,0.4); color: #5ba3d9; }
+.pill-green { background: rgba(6,167,125,0.1); border-color: rgba(6,167,125,0.3); color: #2dc99e; }
+.pill-purple { background: rgba(157,78,221,0.1); border-color: rgba(157,78,221,0.3); color: #b87de8; }
+.pill-gray { background: rgba(122,122,154,0.1); border-color: rgba(122,122,154,0.3); color: #9a9ab8; }
+.pill-orange { background: rgba(247,127,0,0.1); border-color: rgba(247,127,0,0.3); color: #fb923c; }
+
+/* ── HIGHLIGHTS ── */
+.highlights {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.highlight-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.2rem;
+  text-align: center;
+  transition: border-color .2s;
+}
+.highlight-card:hover { border-color: var(--accent); }
+.highlight-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), var(--warning));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: .4rem;
+}
+.highlight-label { font-size: .72rem; color: var(--muted); line-height: 1.4; }
+
+/* ── ROLE ── */
+.role-section { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: .75rem; }
+.role-block { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; }
+.role-block-title { font-size: .65rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.role-block-text { font-size: .82rem; color: rgba(232,232,240,0.8); line-height: 1.65; }
+.role-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .5rem; }
+.role-tag {
+  font-size: .68rem;
+  font-weight: 500;
+  padding: .2rem .6rem;
+  border-radius: 6px;
+  background: rgba(220,38,38,0.08);
+  border: 1px solid rgba(220,38,38,0.2);
+  color: #f87171;
+}
+
+/* ── FOOTER ── */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.private-note {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .8rem;
+  color: var(--muted);
+}
+.private-note svg { opacity: .5; flex-shrink: 0; }
+.private-note strong { color: rgba(232,232,240,0.7); }
+
+.links { display: flex; gap: .75rem; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .65rem 1.4rem;
+  border-radius: 10px;
+  font-size: .82rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all .2s;
+  cursor: pointer;
+  border: none;
+}
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: #b91c1c; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(220,38,38,0.3); }
+.btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+.btn-ghost:hover { border-color: var(--accent); color: #f87171; }
+.year-tag { font-size: .75rem; color: var(--muted); display: flex; align-items: center; gap: .4rem; }
+
+/* ── GALERÍA DE IMÁGENES DEL PROYECTO ── */
+.project-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0 0 0;
+  width: 100%;
+}
+.project-gallery img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+}
+.project-gallery img:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(220,38,38, 0.15);
+  border-color: var(--accent);
+}
+.hero-image {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .hero { padding: 2rem 1.5rem 1.5rem; }
+  .wip-banner { padding: .8rem 1.5rem; }
+  .card-body { padding: 1.75rem 1.5rem; }
+  .features-grid { grid-template-columns: 1fr; }
+  .highlights { grid-template-columns: repeat(3, 1fr); gap: .6rem; }
+  .highlight-value { font-size: 1.4rem; }
+  .tech-group { flex-direction: column; gap: .4rem; }
+  .tech-group-label { min-width: unset; }
+  .arch-flow { gap: .3rem; }
+  .arch-node { min-width: 65px; padding: .5rem; }
+  .card-footer { flex-direction: column; align-items: flex-start; }
+  .dashboard-cols { grid-template-columns: 1fr; }
+  .backend-grid { grid-template-columns: 1fr; }
+  .role-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<article class="project-card">
+
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="project-number">Proyecto 03</div>
+      <h1 class="hero-title">Wuara Media<br>Plataforma Fullstack Audiovisual</h1>
+      <p class="hero-subtitle">
+        Plataforma web fullstack con arquitectura desacoplada — React SPA + API REST en Node.js + PostgreSQL. Panel administrativo completo con 6 módulos, 18+ endpoints RESTful y soporte bilingüe.
+      </p>
+      <div class="status-bar">
+        <span class="status-badge badge-live">Producción activa</span>
+        <span class="status-badge badge-wip">Nuevo módulo en desarrollo</span>
+        <span class="status-badge badge-type">Fullstack App</span>
+        <span class="status-badge badge-role">Frontend + Backend + BD</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wip-banner">
+    <div class="wip-dot"></div>
+    Plataforma en producción activa — Módulo de citas para participantes de casting en desarrollo activo
+  </div>
+
+  <div style="padding: 2.5rem 3rem; background: #06020a; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <img src="wuara1.png" alt="Página Principal Wuara Media" class="hero-image" />
+    <div class="project-gallery">
+      <img src="wuara2.png" alt="Portafolio Audiovisual" loading="lazy" />
+      <img src="wuara3.png" alt="Servicios Wuara" loading="lazy" />
+    </div>
+  </div>
+
+  <div class="card-body">
+
+    <p class="description">
+      Plataforma web completa para Wuara Media, productora de contenido audiovisual de estilo social experiment (inspirada en Jubilee y Cut). Arquitectura desacoplada: React SPA desplegada en VPS y API REST Node.js/Express en Render con PostgreSQL. Incluye landing page con hero video full-screen, sistema de castings con upload de imágenes a Cloudinary, panel administrativo con autenticación JWT y soporte bilingüe ES/EN con contexto propio.
+    </p>
+
+    <div class="section-title">Funcionalidades</div>
+    <div class="features-grid">
+      <div class="feature-item">
+        <span class="feature-icon">🎬</span>
+        <div class="feature-text">
+          <strong>Hero con Video Background</strong>
+          <span>Landing dinámica con video full-screen y parallax scroll</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">🎭</span>
+        <div class="feature-text">
+          <strong>Sistema de Castings</strong>
+          <span>CRUD completo con subida de imágenes a Cloudinary y fechas límite</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">🔐</span>
+        <div class="feature-text">
+          <strong>Panel Admin con JWT</strong>
+          <span>Dashboard privado con 6 módulos: Home, Métricas, Videos, Castings, Sponsors, Mensajes</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">🌍</span>
+        <div class="feature-text">
+          <strong>Bilingüe ES/EN</strong>
+          <span>Sistema i18n propio con React Context para cambio dinámico de idioma</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">📊</span>
+        <div class="feature-text">
+          <strong>Métricas Editables</strong>
+          <span>Stats del canal (vistas, suscriptores, crecimiento) editables desde admin</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">🖼️</span>
+        <div class="feature-text">
+          <strong>Cloudinary CDN</strong>
+          <span>Upload y gestión de imágenes con transformaciones automáticas</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">🤝</span>
+        <div class="feature-text">
+          <strong>Página de Patrocinio</strong>
+          <span>Formulario de propuestas, métricas de impacto y gestión de sponsors</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">✉️</span>
+        <div class="feature-text">
+          <strong>Formulario de Contacto</strong>
+          <span>Bandeja de mensajes en admin con validaciones y sanitización</span>
+        </div>
+      </div>
+      <div class="feature-item wip">
+        <span class="feature-icon">📅</span>
+        <div class="feature-text">
+          <strong>Módulo de Citas <span class="wip-tag">En desarrollo</span></strong>
+          <span>Sistema de reservas para participantes de castings con slots de tiempo</span>
+        </div>
+      </div>
+      <div class="feature-item wip">
+        <span class="feature-icon">🔔</span>
+        <div class="feature-text">
+          <strong>Notificaciones <span class="wip-tag">Próximamente</span></strong>
+          <span>Emails de confirmación automáticos para citas agendadas</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-section">
+      <div class="section-title">Dashboard Administrativo — 6 módulos completos</div>
+      <div class="dashboard-cols">
+        <div class="dash-col">
+          <div class="dash-col-title">Módulos implementados</div>
+          <ul class="dash-feature-list">
+            <li><span class="dash-bullet"></span>Home — gestión de contenido principal</li>
+            <li><span class="dash-bullet"></span>Métricas — estadísticas del canal editables</li>
+            <li><span class="dash-bullet"></span>Videos — gestión de catálogo audiovisual</li>
+            <li><span class="dash-bullet"></span>Castings — CRUD completo con imágenes</li>
+            <li><span class="dash-bullet"></span>Sponsors — gestión y métricas de patrocinadores</li>
+            <li><span class="dash-bullet"></span>Mensajes — bandeja con validación y sanitización</li>
+          </ul>
+        </div>
+        <div class="dash-col">
+          <div class="dash-col-title">Características del panel</div>
+          <ul class="dash-feature-list">
+            <li><span class="dash-bullet"></span>CRUD completo en todos los módulos</li>
+            <li><span class="dash-bullet"></span>Gestión multimedia integrada (Cloudinary)</li>
+            <li><span class="dash-bullet"></span>Autenticación JWT con acceso protegido</li>
+            <li><span class="dash-bullet"></span>Arquitectura modular con separación de responsabilidades</li>
+            <li><span class="dash-bullet"></span>Separación lógica negocio / presentación</li>
+            <li><span class="dash-bullet"></span>Validaciones frontend + backend</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="backend-section">
+      <div class="section-title">Backend Node.js — API REST estructurada</div>
+      <div class="backend-grid">
+        <div class="backend-item">
+          <div class="backend-item-title">Autenticación JWT + Bcrypt</div>
+          <div class="backend-item-desc">Login seguro con tokens firmados, hash de contraseñas y middleware de verificación en rutas protegidas.</div>
+        </div>
+        <div class="backend-item">
+          <div class="backend-item-title">Middleware de seguridad</div>
+          <div class="backend-item-desc">Helmet para headers, Express Rate Limit contra abuso, CORS configurado y logging con Morgan.</div>
+        </div>
+        <div class="backend-item">
+          <div class="backend-item-title">Sanitización y validación</div>
+          <div class="backend-item-desc">Validator.js en todos los inputs del servidor. Manejo centralizado de errores con respuestas consistentes.</div>
+        </div>
+        <div class="backend-item">
+          <div class="backend-item-title">Arquitectura modular</div>
+          <div class="backend-item-desc">Separación clara de routes, controllers y servicios. 18+ endpoints RESTful documentados y organizados.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-section">
+      <div class="section-title">Arquitectura desacoplada</div>
+      <div class="arch-flow">
+        <div class="arch-node">
+          <span>⚛️</span>
+          <strong>React SPA</strong>
+          <small>Hostinger VPS</small>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">
+          <span>🟢</span>
+          <strong>Express API</strong>
+          <small>Render.com</small>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">
+          <span>🐘</span>
+          <strong>PostgreSQL</strong>
+          <small>Render (Interno)</small>
+        </div>
+        <div class="arch-arrow">+</div>
+        <div class="arch-node">
+          <span>☁️</span>
+          <strong>Cloudinary</strong>
+          <small>Multimedia CDN</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="tech-section">
+      <div class="section-title">Stack tecnológico</div>
+      <div class="tech-groups">
+        <div class="tech-group">
+          <span class="tech-group-label">Frontend</span>
+          <div class="tech-pills">
+            <span class="pill pill-red">React 19</span>
+            <span class="pill pill-red">Vite 7</span>
+            <span class="pill pill-red">TailwindCSS 4</span>
+            <span class="pill pill-red">Framer Motion</span>
+            <span class="pill pill-red">React Router 7</span>
+          </div>
+        </div>
+        <div class="tech-group">
+          <span class="tech-group-label">Backend</span>
+          <div class="tech-pills">
+            <span class="pill pill-blue">Node.js 18+</span>
+            <span class="pill pill-blue">Express.js</span>
+            <span class="pill pill-blue">JWT</span>
+            <span class="pill pill-blue">Bcrypt</span>
+            <span class="pill pill-blue">Multer</span>
+            <span class="pill pill-blue">Helmet</span>
+          </div>
+        </div>
+        <div class="tech-group">
+          <span class="tech-group-label">Base de datos</span>
+          <div class="tech-pills">
+            <span class="pill pill-green">PostgreSQL 14+</span>
+            <span class="pill pill-green">pg (node-postgres)</span>
+            <span class="pill pill-green">Pool de conexiones</span>
+          </div>
+        </div>
+        <div class="tech-group">
+          <span class="tech-group-label">Cloud / CDN</span>
+          <div class="tech-pills">
+            <span class="pill pill-orange">Cloudinary</span>
+            <span class="pill pill-orange">multer-storage-cloudinary</span>
+          </div>
+        </div>
+        <div class="tech-group">
+          <span class="tech-group-label">Seguridad</span>
+          <div class="tech-pills">
+            <span class="pill pill-purple">JWT + Bcryptjs</span>
+            <span class="pill pill-purple">Express Rate Limit</span>
+            <span class="pill pill-purple">Validator.js</span>
+            <span class="pill pill-purple">CORS</span>
+          </div>
+        </div>
+        <div class="tech-group">
+          <span class="tech-group-label">Hosting</span>
+          <div class="tech-pills">
+            <span class="pill pill-gray">Hostinger VPS (Frontend)</span>
+            <span class="pill pill-gray">Render.com (Backend)</span>
+            <span class="pill pill-gray">Morgan (Logging)</span>
+            <span class="pill pill-gray">PM2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlights">
+      <div class="highlight-card">
+        <div class="highlight-value">6</div>
+        <div class="highlight-label">Módulos en el panel admin</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-value">18+</div>
+        <div class="highlight-label">Endpoints RESTful</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-value">ES/EN</div>
+        <div class="highlight-label">Soporte bilingüe</div>
+      </div>
+    </div>
+
+    <div class="role-section">
+      <div class="section-title">Rol y responsabilidad</div>
+      <div class="role-grid">
+        <div class="role-block">
+          <div class="role-block-title">Rol</div>
+          <div class="role-block-text"><strong style="color:var(--text)">Fullstack Developer</strong><br/>Responsable de arquitectura, implementación y despliegue completo — frontend, backend y base de datos.</div>
+          <div class="role-tags" style="margin-top:.75rem">
+            <span class="role-tag">Arquitectura desacoplada</span>
+            <span class="role-tag">API REST</span>
+            <span class="role-tag">Admin Dashboard</span>
+            <span class="role-tag">Deploy VPS</span>
+          </div>
+        </div>
+        <div class="role-block">
+          <div class="role-block-title">Estado del proyecto</div>
+          <div class="role-block-text">
+            ✔ Producción activa<br/>
+            ✔ Plataforma completa entregada al cliente<br/>
+            ✔ Nuevo módulo de citas en desarrollo activo<br/>
+            ✔ Iteración continua basada en feedback real
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <div class="private-note">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Código <strong>privado por acuerdo con el cliente</strong> — disponible para revisión en entrevista técnica. Cualquier duda, escríbeme.
+      </div>
+      <div class="links">
+        <a href="mailto:" class="btn btn-ghost">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Consultar proyecto
+        </a>
+        <a href="mailto:" class="btn btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Contactar
+        </a>
+      </div>
+      <span class="year-tag">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        2025 — En evolución
+      </span>
+    </div>
+
+  </div>
+</article>
+</body>
+</html>

@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Proyecto - Panadería Digital</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #fdf6ed;
+  --bg2: #f7ede0;
+  --surface: #ffffff;
+  --surface2: #fef9f4;
+  --border: #e8d8c4;
+  --border2: #d9c4ab;
+  --amber: #c8741a;
+  --amber-d: #9d5a10;
+  --amber-l: #f4d4a8;
+  --amber-xl: #fef3e2;
+  --brown: #5d3a1a;
+  --brown-l: #8b5e35;
+  --text: #2d1a0a;
+  --muted: #8a6a4a;
+  --success: #2d7a3a;
+  --success-l: #d4edda;
+  --blue: #1a5296;
+  --blue-l: #d0e4f7;
+  --red: #b91c1c;
+  --red-l: #fee2e2;
+  --purple: #6d28d9;
+  --purple-l: #ede9fe;
+  --teal: #0f766e;
+  --teal-l: #ccfbf1;
+  --socket-color: #059669;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Source Sans 3', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2.5rem 1rem 5rem;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -5%, rgba(200,116,26,0.1) 0%, transparent 60%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8741a' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.project-card {
+  width: 100%;
+  max-width: 940px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow:
+    0 4px 6px rgba(93,58,26,0.06),
+    0 20px 60px rgba(93,58,26,0.1),
+    0 60px 100px rgba(93,58,26,0.06);
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  background: linear-gradient(135deg, #2d1a0a 0%, #4a2810 40%, #3d1f08 100%);
+  padding: 3rem 3rem 2.5rem;
+  overflow: hidden;
+}
+
+.hero-texture {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 90% 10%, rgba(200,116,26,0.3) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 70% at 0% 90%, rgba(93,58,26,0.4) 0%, transparent 50%);
+}
+
+.hero-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(244,212,168,0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.hero-content { position: relative; z-index: 1; }
+
+.hero-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.project-number {
+  font-family: 'Playfair Display', serif;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--amber-l);
+  margin-bottom: .85rem;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  opacity: .7;
+}
+.project-number::before { content: ''; display: inline-block; width: 28px; height: 1px; background: var(--amber-l); }
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: .85rem;
+  color: #fff;
+}
+.hero-title .accent { color: var(--amber-l); font-style: italic; }
+
+.hero-subtitle {
+  font-size: .98rem;
+  color: rgba(244,212,168,0.7);
+  max-width: 500px;
+  line-height: 1.7;
+  margin-bottom: 1.75rem;
+}
+
+.status-bar { display: flex; flex-wrap: wrap; gap: .6rem; }
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .72rem;
+  font-weight: 600;
+  padding: .32rem .85rem;
+  border-radius: 999px;
+  border: 1px solid;
+  letter-spacing: .03em;
+}
+.badge-live {
+  background: rgba(45,122,58,0.2);
+  border-color: rgba(45,122,58,0.5);
+  color: #6ee7a0;
+}
+.badge-live::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #6ee7a0;
+  animation: pulse 2s infinite;
+}
+.badge-type {
+  background: rgba(200,116,26,0.15);
+  border-color: rgba(200,116,26,0.4);
+  color: var(--amber-l);
+}
+.badge-role {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.7);
+}
+
+.hero-number-big {
+  font-family: 'Playfair Display', serif;
+  font-size: 8rem;
+  font-weight: 800;
+  color: rgba(200,116,26,0.08);
+  line-height: 1;
+  flex-shrink: 0;
+  user-select: none;
+  align-self: flex-end;
+}
+
+/* ── BODY ── */
+.card-body { padding: 2.5rem 3rem; }
+
+/* ── DESCRIPTION ── */
+.description {
+  font-size: .97rem;
+  color: #5a3a1a;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.description strong { color: var(--amber); font-weight: 600; }
+
+/* Context box */
+.context-box {
+  background: var(--amber-xl);
+  border: 1px solid var(--amber-l);
+  border-left: 3px solid var(--amber);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-top: 1.25rem;
+}
+.context-box-title {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--amber-d);
+  margin-bottom: .4rem;
+  font-family: 'Source Sans 3', sans-serif;
+}
+.context-box p { font-size: .84rem; color: var(--brown-l); line-height: 1.65; }
+
+/* ── SECTION TITLE ── */
+.section-title {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-family: 'Source Sans 3', sans-serif;
+}
+.section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); max-width: 180px; }
+
+/* ── FEATURES GRID ── */
+.features-section { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: .7rem;
+}
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: .7rem;
+  padding: .9rem 1rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.feature-item:hover {
+  border-color: var(--amber-l);
+  box-shadow: 0 4px 12px rgba(200,116,26,0.08);
+}
+.feature-icon { font-size: 1.15rem; flex-shrink: 0; margin-top: .05rem; }
+.feature-text strong { display: block; font-size: .82rem; font-weight: 600; color: var(--brown); margin-bottom: .12rem; }
+.feature-text span { font-size: .74rem; color: var(--muted); line-height: 1.5; }
+
+/* ── REALTIME SECTION ── */
+.realtime-section { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.realtime-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(195px, 1fr)); gap: .7rem; }
+.rt-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.1rem;
+  transition: border-color .2s;
+}
+.rt-item:hover { border-color: rgba(5,150,105,0.35); }
+.rt-item-icon { font-size: 1.3rem; margin-bottom: .4rem; }
+.rt-item-title { font-size: .8rem; font-weight: 600; color: var(--brown); margin-bottom: .25rem; }
+.rt-item-desc { font-size: .72rem; color: var(--muted); line-height: 1.5; }
+.rt-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  font-size: .62rem;
+  font-weight: 700;
+  padding: .15rem .5rem;
+  border-radius: 999px;
+  background: rgba(5,150,105,0.1);
+  border: 1px solid rgba(5,150,105,0.3);
+  color: var(--socket-color);
+  margin-top: .4rem;
+  letter-spacing: .04em;
+}
+.rt-badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--socket-color); animation: pulse 2s infinite; }
+
+/* ── ROLES & PERMISOS ── */
+.roles-section { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.roles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; }
+.role-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.25rem;
+  transition: border-color .2s;
+}
+.role-card.admin { border-top: 3px solid var(--red); }
+.role-card.manager { border-top: 3px solid var(--blue); }
+.role-card.employee { border-top: 3px solid var(--success); }
+.role-card-name {
+  font-size: .78rem;
+  font-weight: 700;
+  margin-bottom: .75rem;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+.role-card.admin .role-card-name { color: var(--red); }
+.role-card.manager .role-card-name { color: var(--blue); }
+.role-card.employee .role-card-name { color: var(--success); }
+.perm-list { list-style: none; display: flex; flex-direction: column; gap: .35rem; }
+.perm-list li { display: flex; align-items: flex-start; gap: .45rem; font-size: .73rem; color: var(--muted); line-height: 1.4; }
+.perm-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+.perm-dot.yes { background: var(--success); }
+.perm-dot.no { background: #d1d5db; }
+
+/* ── TECH STACK ── */
+.tech-section { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.tech-groups { display: flex; flex-direction: column; gap: .9rem; }
+.tech-group { display: flex; align-items: flex-start; gap: 1rem; }
+.tech-group-label {
+  font-size: .68rem;
+  font-weight: 600;
+  color: var(--muted);
+  min-width: 90px;
+  padding-top: .3rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-family: 'Source Sans 3', sans-serif;
+}
+.tech-pills { display: flex; flex-wrap: wrap; gap: .45rem; }
+.pill {
+  font-size: .72rem;
+  font-weight: 500;
+  padding: .28rem .75rem;
+  border-radius: 7px;
+  border: 1px solid;
+}
+.pill-amber { background: rgba(200,116,26,0.08); border-color: rgba(200,116,26,0.25); color: var(--amber-d); }
+.pill-brown { background: rgba(93,58,26,0.07); border-color: rgba(93,58,26,0.2); color: var(--brown-l); }
+.pill-blue { background: rgba(26,82,150,0.07); border-color: rgba(26,82,150,0.22); color: var(--blue); }
+.pill-green { background: rgba(45,122,58,0.07); border-color: rgba(45,122,58,0.22); color: var(--success); }
+.pill-purple { background: rgba(109,40,217,0.07); border-color: rgba(109,40,217,0.22); color: var(--purple); }
+.pill-teal { background: rgba(15,118,110,0.07); border-color: rgba(15,118,110,0.22); color: var(--teal); }
+.pill-gray { background: rgba(138,106,74,0.07); border-color: rgba(138,106,74,0.2); color: var(--muted); }
+
+/* ── HIGHLIGHTS ── */
+.highlights {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.highlight-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  transition: border-color .2s, box-shadow .2s;
+}
+.highlight-card:hover {
+  border-color: var(--amber-l);
+  box-shadow: 0 4px 16px rgba(200,116,26,0.1);
+}
+.highlight-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.85rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--amber) 0%, var(--brown) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: .35rem;
+}
+.highlight-label { font-size: .7rem; color: var(--muted); line-height: 1.4; }
+
+/* ── ROLE SECTION ── */
+.role-section { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.role-block {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.35rem;
+}
+.role-block-title {
+  font-size: .63rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--amber-d);
+  margin-bottom: .65rem;
+  font-family: 'Source Sans 3', sans-serif;
+}
+.role-block-text { font-size: .84rem; color: #5a3a1a; line-height: 1.7; }
+.role-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .6rem; }
+.role-tag {
+  font-size: .68rem;
+  font-weight: 500;
+  padding: .2rem .65rem;
+  border-radius: 7px;
+  background: var(--amber-xl);
+  border: 1px solid var(--amber-l);
+  color: var(--amber-d);
+}
+
+/* ── FOOTER ── */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.private-note {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+  font-size: .8rem;
+  color: var(--muted);
+  max-width: 520px;
+  line-height: 1.6;
+}
+.private-note svg { opacity: .5; flex-shrink: 0; margin-top: 2px; }
+.private-note strong { color: var(--brown-l); font-weight: 600; }
+
+.links { display: flex; gap: .7rem; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .65rem 1.35rem;
+  border-radius: 10px;
+  font-size: .82rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all .2s;
+  cursor: pointer;
+  border: none;
+  font-family: 'Source Sans 3', sans-serif;
+}
+.btn-primary { background: var(--amber); color: #fff; }
+.btn-primary:hover { background: var(--amber-d); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(200,116,26,0.3); }
+.btn-ghost { background: transparent; color: var(--brown); border: 1.5px solid var(--border2); }
+.btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+
+.year-tag {
+  font-size: .74rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+/* ── GALERÍA DE IMÁGENES DEL PROYECTO ── */
+.project-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0 0 0;
+  width: 100%;
+}
+.project-gallery img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+}
+.project-gallery img:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(200,116,26, 0.15);
+  border-color: var(--amber-l);
+}
+.hero-image {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+.project-card { animation: fadeUp .5s ease both; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 680px) {
+  .hero { padding: 2rem 1.5rem 1.75rem; }
+  .card-body { padding: 1.75rem 1.5rem; }
+  .features-grid { grid-template-columns: 1fr; }
+  .roles-grid { grid-template-columns: 1fr; }
+  .highlights { grid-template-columns: repeat(2, 1fr); }
+  .role-grid { grid-template-columns: 1fr; }
+  .tech-group { flex-direction: column; gap: .4rem; }
+  .tech-group-label { min-width: unset; }
+  .card-footer { flex-direction: column; align-items: flex-start; }
+  .hero-number-big { display: none; }
+  .realtime-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<article class="project-card">
+
+  <div class="hero">
+    <div class="hero-texture"></div>
+    <div class="hero-dots"></div>
+    <div class="hero-content">
+      <div class="hero-top">
+        <div>
+          <div class="project-number">Proyecto 04</div>
+          <h1 class="hero-title">Panadería <span class="accent">Digital</span><br>Sistema de Gestión</h1>
+          <p class="hero-subtitle">
+          Sistema transaccional en tiempo real con arquitectura desacoplada (SPA + API REST + WebSockets) para gestión de producción, ventas e inventario con control de concurrencia y roles granulares. 
+          </p>
+          <div class="status-bar">
+            <span class="badge badge-live">Producción activa</span>
+            <span class="badge badge-type">Fullstack App · Real-Time</span>
+            <span class="badge badge-role">React · Node.js · Socket.IO · PostgreSQL</span>
+          </div>
+        </div>
+        <div class="hero-number-big">04</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding: 2.5rem 3rem; background: #1a0d04; border-top: 1px solid rgba(200,116,26,0.2); border-bottom: 1px solid var(--border);">
+    <img src="pan4.png" alt="Dashboard Panadería" class="hero-image" />
+    <div class="project-gallery">
+      <img src="pan2.png" alt="Catálogo de Productos" loading="lazy" />
+      <img src="pan3.png" alt="Detalle de Panes" loading="lazy" />
+      <img src="pan1.png" alt="Proceso de Compra" loading="lazy" />
+    </div>
+  </div>
+
+  <div class="card-body">
+
+    <p class="description">
+      Sistema completo para la administración de una panadería: gestión de <strong>lotes de producción</strong> agrupados por fecha, registro de ventas con múltiples estados (pagado, entregado, regalo), <strong>dashboard de analíticas</strong> con filtros dinámicos y reporte financiero de dinero pendiente de cobro. Incluye gestión de inventario de insumos con historial auditado de cambios de stock, panel de usuarios con aprobación, roles y permisos granulares, y un módulo de tarjeta de estiba con filtro por rango de fechas.<br><br>
+      Todo el sistema opera en <strong>tiempo real</strong> — cualquier cambio de un usuario se refleja instantáneamente en todos los demás clientes conectados vía Socket.IO.
+      <div class="context-box">
+        <div class="context-box-title">Decisión de arquitectura real-time</div>
+        <p>Se optó por Socket.IO sobre polling por su eficiencia en entornos de venta concurrente: varios vendedores pueden registrar ventas simultáneamente sin riesgo de ver datos desactualizados. Los eventos granulares (batch:created, sale:created, sale:updated…) permiten actualizaciones quirúrgicas del estado en React sin recargar todo el árbol de datos.</p>
+      </div>
+    </p>
+
+    <div class="features-section">
+      <div class="section-title">Funcionalidades</div>
+      <div class="features-grid">
+        <div class="feature-item">
+          <span class="feature-icon">🍞</span>
+          <div class="feature-text">
+            <strong>Lotes por fecha</strong>
+            <span>Producción agrupada por día con secciones expandibles y contexto visual claro</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🛒</span>
+          <div class="feature-text">
+            <strong>Ventas granulares</strong>
+            <span>Estado de pago, entrega, marca como regalo (no genera ingreso) por venta individual</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">💰</span>
+          <div class="feature-text">
+            <strong>Dashboard financiero</strong>
+            <span>Dinero total pendiente de cobro calculado en tiempo real con filtros por estado</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">📊</span>
+          <div class="feature-text">
+            <strong>Tarjeta de estiba</strong>
+            <span>Reporte de producción vs venta con filtro por rango de fechas e ingresos totales</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🌾</span>
+          <div class="feature-text">
+            <strong>Inventario de insumos</strong>
+            <span>CRUD de materiales con actualización por suma/resta e historial completo auditado</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">👥</span>
+          <div class="feature-text">
+            <strong>Gestión de usuarios</strong>
+            <span>Aprobación de registros, creación directa por admin, edición de rol y permisos</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🔐</span>
+          <div class="feature-text">
+            <strong>Auth JWT completa</strong>
+            <span>Login seguro, tokens persistidos en localStorage, auto-logout en expiración</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">✏️</span>
+          <div class="feature-text">
+            <strong>Edición de fechas de lote</strong>
+            <span>Admin puede corregir la fecha de cualquier lote con propagación inmediata vía socket</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="realtime-section">
+      <div class="section-title">Tiempo real — Socket.IO · 8 eventos de negocio</div>
+      <div class="realtime-grid">
+        <div class="rt-item">
+          <div class="rt-item-icon">🟢</div>
+          <div class="rt-item-title">batch:created / batch:deleted</div>
+          <div class="rt-item-desc">Lotes nuevos o eliminados aparecen/desaparecen en todos los clientes al instante.</div>
+          <div class="rt-badge">Socket.IO</div>
+        </div>
+        <div class="rt-item">
+          <div class="rt-item-icon">⚡</div>
+          <div class="rt-item-title">sale:created / sale:updated / sale:deleted</div>
+          <div class="rt-item-desc">Ventas se sincronizan en tiempo real — el dinero pendiente se recalcula automáticamente.</div>
+          <div class="rt-badge">Socket.IO</div>
+        </div>
+        <div class="rt-item">
+          <div class="rt-item-icon">📅</div>
+          <div class="rt-item-title">batch:updated</div>
+          <div class="rt-item-desc">Cambios de fecha de un lote propagados inmediatamente a todos los usuarios conectados.</div>
+          <div class="rt-badge">Socket.IO</div>
+        </div>
+        <div class="rt-item">
+          <div class="rt-item-icon">👤</div>
+          <div class="rt-item-title">user:registered / user:approved</div>
+          <div class="rt-item-desc">Admin recibe notificaciones en vivo de nuevos registros y aprobaciones de usuarios.</div>
+          <div class="rt-badge">Socket.IO</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="roles-section">
+      <div class="section-title">Sistema de roles y permisos granulares</div>
+      <div class="roles-grid">
+        <div class="role-card admin">
+          <div class="role-card-name">🔴 Administrador</div>
+          <ul class="perm-list">
+            <li><span class="perm-dot yes"></span>Gestión completa de lotes y ventas</li>
+            <li><span class="perm-dot yes"></span>Eliminar ventas y lotes</li>
+            <li><span class="perm-dot yes"></span>Cambiar estado de pago</li>
+            <li><span class="perm-dot yes"></span>Editar fechas de lotes</li>
+            <li><span class="perm-dot yes"></span>Inventario de insumos</li>
+            <li><span class="perm-dot yes"></span>Gestión de usuarios</li>
+            <li><span class="perm-dot yes"></span>Tarjeta de estiba</li>
+          </ul>
+        </div>
+        <div class="role-card manager">
+          <div class="role-card-name">🔵 Gerente</div>
+          <ul class="perm-list">
+            <li><span class="perm-dot yes"></span>Gestión de lotes y stock</li>
+            <li><span class="perm-dot yes"></span>Ver todas las ventas</li>
+            <li><span class="perm-dot yes"></span>Cambiar estado de pago</li>
+            <li><span class="perm-dot no"></span>Eliminar ventas o lotes</li>
+            <li><span class="perm-dot yes"></span>Tarjeta de estiba</li>
+            <li><span class="perm-dot no"></span>Inventario / Usuarios</li>
+          </ul>
+        </div>
+        <div class="role-card employee">
+          <div class="role-card-name">🟢 Empleado</div>
+          <ul class="perm-list">
+            <li><span class="perm-dot yes"></span>Registrar ventas propias</li>
+            <li><span class="perm-dot yes"></span>Marcar entrega de sus ventas</li>
+            <li><span class="perm-dot no"></span>Ver ventas de otros</li>
+            <li><span class="perm-dot no"></span>Cambiar estado de pago</li>
+            <li><span class="perm-dot no"></span>Gestión de lotes</li>
+            <li><span class="perm-dot no"></span>Panel administrativo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="architecture-section">
+  <div class="section-title">Arquitectura del sistema</div>
+  <p class="description">
+    Arquitectura desacoplada basada en SPA en React consumiendo una API REST en Node.js.
+    El backend expone endpoints RESTful para operaciones transaccionales y utiliza
+    Socket.IO para sincronización en tiempo real entre múltiples clientes concurrentes.
+    PostgreSQL maneja la persistencia con transacciones ACID para garantizar
+    consistencia en ventas y stock.
+  </p>
+</div>
+
+    <div class="tech-section">
+      <div class="section-title">Stack tecnológico</div>
+      <div class="tech-groups">
+        <div class="tech-group">
+          <span class="tech-group-label">Frontend</span>
+          <div class="tech-pills">
+            <span class="pill pill-amber">React 19</span>
+            <span class="pill pill-amber">Vite 4</span>
+            <span class="pill pill-amber">TailwindCSS 3</span>
+            <span class="pill pill-amber">socket.io-client</span>
+            <span class="pill pill-amber">Axios</span>
+          </div>
+        </div>
+        <div class="tech-group">
+          <span class="tech-group-label">Estado</span>
+          <div class="tech-pills">
+            <span class="pill pill-purple">useState · useEffect</span>
+            <span class="pill pill-purple">useCallback</span>
+            <span class="pill pill-purple">useMemo</span>
+            <span class="pill pill-purple">Custom hooks</span>
+          </div>
+        </div>
+        <div class="tech-group">
+          <span class="tech-group-label">Backend</span>
+          <div class="tech-pills">
+            <span class="pill pill-blue">Node.js 18+</span>
+            <span class="pill pill-blue">Express.js</span>
+            <span class="pill pill-blue">Socket.IO</span>
+            <span class="pill pill-blue">JWT</span>
+            <span class="pill pill-blue">Bcryptjs</span>
+          </div>
+        </div>
+        <div class="tech-group">
+          <span class="tech-group-label">Base de datos</span>
+          <div class="tech-pills">
+            <span class="pill pill-green">PostgreSQL (Neon)</span>
+            <span class="pill pill-green">pg (node-postgres)</span>
+            <span class="pill pill-green">Pool de conexiones</span>
+            <span class="pill pill-green">Transacciones SQL</span>
+          </div>
+        </div>
+        <div class="tech-group">
+          <span class="tech-group-label">Seguridad</span>
+          <div class="tech-pills">
+            <span class="pill pill-brown">JWT Auth</span>
+            <span class="pill pill-brown">Role-based middleware</span>
+            <span class="pill pill-brown">Permission guards</span>
+            <span class="pill pill-brown">CORS</span>
+          </div>
+        </div>
+        <div class="tech-group">
+          <span class="tech-group-label">Hosting</span>
+          <div class="tech-pills">
+            <span class="pill pill-teal">Render.com (Backend)</span>
+            <span class="pill pill-teal">Neon (PostgreSQL)</span>
+            <span class="pill pill-gray">Hostinger VPS (Frontend)</span>
+            <span class="pill pill-gray">dotenv</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlights">
+      <div class="highlight-card">
+        <div class="highlight-value">8</div>
+        <div class="highlight-label">Eventos Socket.IO en tiempo real</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-value">3</div>
+        <div class="highlight-label">Roles con permisos diferenciados</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-value">20+</div>
+        <div class="highlight-label">Endpoints RESTful en la API</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-value">✔</div>
+        <div class="highlight-label">Auditado — historial de inventario con usuario</div>
+      </div>
+    </div>
+
+    <div class="role-section">
+      <div class="section-title">Rol y responsabilidad</div>
+      <div class="role-grid">
+        <div class="role-block">
+          <div class="role-block-title">Rol</div>
+          <div class="role-block-text">
+            <strong>Fullstack Developer</strong> — Responsable de arquitectura, implementación completa y despliegue en producción. Diseño del esquema de base de datos, API REST, integración Socket.IO y UI React.
+          </div>
+          <div class="role-tags">
+            <span class="role-tag">Arquitectura backend</span>
+            <span class="role-tag">Real-time WebSockets</span>
+            <span class="role-tag">React UI</span>
+            <span class="role-tag">Auth y permisos</span>
+            <span class="role-tag">DB design</span>
+            <span class="role-tag">Deploy</span>
+          </div>
+        </div>
+        <div class="role-block">
+          <div class="role-block-title">Estado del proyecto</div>
+          <div class="role-block-text">
+            ✔ En producción activa<br/>
+            ✔ Usado por el equipo de ventas de la panadería<br/>
+            ✔ Múltiples usuarios concurrentes en tiempo real<br/>
+            ✔ Iteración continua basada en feedback real
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <div class="private-note">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Código <strong>privado por acuerdo con el cliente</strong> — disponible para revisión en entrevista técnica. Cualquier duda o consulta, escríbeme.
+      </div>
+      <div class="links">
+        <a href="mailto:" class="btn btn-ghost">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Consultar proyecto
+        </a>
+        <a href="mailto:" class="btn btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Contactar
+        </a>
+      </div>
+      <span class="year-tag">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        2025 — En producción
+      </span>
+    </div>
+
+  </div></article>
+</body>
+</html>

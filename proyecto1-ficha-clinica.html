@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portafolio – Ficha Clínica Dermatológica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --rose: #c83b8e;
+  --rose-l: #eebcdf;
+  --rose-d: #8e1a5e;
+  --rose-glow: rgba(200,59,142,0.15);
+  --ink: #1a0d14;
+  --paper: #fdf6fb;
+  --paper2: #f8eef6;
+  --muted: #8a7080;
+  --card: #ffffff;
+  --border: #f0dcea;
+  --border2: #e8d0e4;
+  --green: #22c55e;
+  --amber: #f59e0b;
+  --blue: #3b82f6;
+  --indigo: #6366f1;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  padding: 3rem 1.5rem 5rem;
+  background-image: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(200,59,142,0.08) 0%, transparent 60%);
+}
+
+.wrapper { max-width: 1100px; margin: 0 auto; }
+
+/* ── EYEBROW ── */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: 1rem;
+  animation: fadeUp .5s ease both;
+}
+.eyebrow-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--rose) 0%, transparent 100%); }
+.eyebrow-label { font-size: .72rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--rose); }
+
+/* ── HERO ── */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 2rem;
+  margin-bottom: 3.5rem;
+  animation: fadeUp .55s .05s ease both;
+}
+.hero-title { font-family: 'DM Serif Display', serif; font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1.05; color: var(--ink); }
+.hero-title em { font-style: italic; color: var(--rose); }
+.hero-meta { text-align: right; font-size: .82rem; color: var(--muted); line-height: 1.8; }
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  background: #dcfce7;
+  color: #166534;
+  font-size: .72rem;
+  font-weight: 600;
+  padding: .3rem .85rem;
+  border-radius: 999px;
+  letter-spacing: .04em;
+  margin-bottom: .5rem;
+}
+.status-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 1.8s infinite; }
+
+/* ── GRID ── */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 1.25rem;
+}
+
+/* ── CARD BASE ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  animation: fadeUp .5s ease both;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 60px rgba(200,59,142,.1);
+  border-color: var(--rose-l);
+}
+
+.card-label {
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.card-label::before { content:''; display: inline-block; width: 8px; height: 8px; background: var(--rose); border-radius: 2px; }
+
+/* ── DESC ── */
+.card--desc { grid-column: 1 / 2; animation-delay: .15s; }
+.desc-text { font-size: 1rem; line-height: 1.75; color: #3d1f30; }
+.desc-text strong { color: var(--rose); font-weight: 600; }
+
+/* Context highlight */
+.context-box {
+  background: linear-gradient(135deg, rgba(200,59,142,0.06), rgba(200,59,142,0.03));
+  border: 1px solid rgba(200,59,142,0.2);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-top: 1.25rem;
+}
+.context-box-title { font-size: .68rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--rose); margin-bottom: .5rem; }
+.context-box p { font-size: .85rem; color: #5a2e45; line-height: 1.6; }
+
+/* ── FEATURES ── */
+.card--features { grid-column: 2 / 3; animation-delay: .2s; }
+.feature-list { list-style: none; display: flex; flex-direction: column; gap: .65rem; }
+.feature-list li { display: flex; align-items: flex-start; gap: .65rem; font-size: .88rem; line-height: 1.4; color: #3d1f30; }
+.feature-icon {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .75rem;
+  margin-top: 1px;
+}
+.fi-rose { background: #fce7f3; color: var(--rose); }
+.fi-green { background: #dcfce7; color: #16a34a; }
+.fi-blue { background: #dbeafe; color: #2563eb; }
+.fi-amber { background: #fef3c7; color: #d97706; }
+.fi-indigo { background: #e0e7ff; color: var(--indigo); }
+.fi-teal { background: #ccfbf1; color: #0d9488; }
+.fi-purple { background: #f3e8ff; color: #9333ea; }
+.fi-red { background: #fee2e2; color: #dc2626; }
+
+/* ── OFFLINE SECTION ── */
+.card--offline { grid-column: 1 / -1; animation-delay: .22s; }
+.offline-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .75rem; margin-top: .5rem; }
+.offline-item {
+  background: var(--paper2);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 1rem;
+}
+.offline-item-icon { font-size: 1.4rem; margin-bottom: .4rem; }
+.offline-item-title { font-size: .8rem; font-weight: 600; color: var(--ink); margin-bottom: .2rem; }
+.offline-item-desc { font-size: .73rem; color: var(--muted); line-height: 1.5; }
+
+/* ── TECH STACK ── */
+.card--stack { grid-column: 1 / -1; animation-delay: .25s; }
+.stack-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: .75rem; margin-top: .25rem; }
+.tech-item {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: .75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  transition: border-color .2s, background .2s;
+}
+.tech-item:hover { border-color: var(--rose-l); background: #fdf0f9; }
+.tech-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.tech-name { font-size: .8rem; font-weight: 500; color: var(--ink); }
+.tech-role { font-size: .68rem; color: var(--muted); }
+
+/* ── METRICS ── */
+.card--metrics {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+  animation-delay: .3s;
+}
+.metric {
+  flex: 1;
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  border-right: 1px solid var(--border);
+  transition: background .2s;
+}
+.metric:last-child { border-right: none; }
+.metric:hover { background: #fdf0f9; }
+.metric-num { font-family: 'DM Serif Display', serif; font-size: 2.2rem; color: var(--rose); line-height: 1; margin-bottom: .3rem; }
+.metric-label { font-size: .72rem; font-weight: 500; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+
+/* ── CHALLENGES ── */
+.card--challenges { grid-column: 1 / 2; animation-delay: .35s; }
+.challenge-item { border-left: 2px solid var(--rose-l); padding: .6rem 0 .6rem 1rem; margin-bottom: .85rem; }
+.challenge-item:last-child { margin-bottom: 0; }
+.challenge-title { font-size: .85rem; font-weight: 600; color: var(--ink); margin-bottom: .2rem; }
+.challenge-desc { font-size: .78rem; color: var(--muted); line-height: 1.55; }
+
+/* ── ROLE ── */
+.card--role { grid-column: 2 / 3; animation-delay: .4s; }
+.role-section { margin-bottom: 1.25rem; }
+.role-section:last-child { margin-bottom: 0; }
+.role-title { font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--rose); margin-bottom: .4rem; }
+.role-text { font-size: .85rem; color: #3d1f30; line-height: 1.6; }
+.tag-row { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .35rem; }
+.tag {
+  background: #fce7f3;
+  color: var(--rose-d);
+  font-size: .7rem;
+  font-weight: 500;
+  padding: .2rem .65rem;
+  border-radius: 999px;
+  border: 1px solid var(--rose-l);
+}
+
+/* ── LINKS ── */
+.card--links {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  animation-delay: .45s;
+}
+.links-left { font-size: .85rem; color: var(--muted); display: flex; align-items: center; gap: .5rem; }
+.links-left svg { opacity: 0.5; flex-shrink: 0; }
+.private-note-text { font-size: .82rem; color: var(--muted); }
+.private-note-text strong { color: #5a2e45; }
+
+.btn-group { display: flex; gap: .75rem; flex-wrap: wrap; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .65rem 1.4rem;
+  border-radius: 10px;
+  font-size: .82rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all .2s;
+  border: none;
+}
+.btn-primary { background: var(--rose); color: #fff; }
+.btn-primary:hover { background: var(--rose-d); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(200,59,142,0.3); }
+.btn-outline { background: transparent; color: var(--rose); border: 1.5px solid var(--rose-l); }
+.btn-outline:hover { background: #fce7f3; border-color: var(--rose); transform: translateY(-1px); }
+
+.year-tag { font-size: .75rem; color: var(--muted); display: flex; align-items: center; gap: .4rem; }
+
+/* ── GALERÍA DE IMÁGENES DEL PROYECTO ── */
+.project-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0 0 0;
+  width: 100%;
+}
+.project-gallery img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+}
+.project-gallery img:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(200,59,142, 0.15);
+  border-color: var(--rose-l);
+}
+.hero-image {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+}
+
+/* ── ANIMS ── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 720px) {
+  body { padding: 2rem 1rem; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-meta { text-align: left; }
+  .main-grid { grid-template-columns: 1fr; }
+  .card--desc, .card--features, .card--stack, .card--challenges, .card--role { grid-column: 1; }
+  .card--metrics { flex-direction: column; }
+  .metric { border-right: none; border-bottom: 1px solid var(--border); }
+  .metric:last-child { border-bottom: none; }
+  .card--links { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="eyebrow">
+    <span class="eyebrow-label">Proyecto 01</span>
+    <div class="eyebrow-line"></div>
+    <span class="status-pill"><span class="status-dot"></span> Producción Activa</span>
+  </div>
+
+  <div class="hero">
+    <h1 class="hero-title">Ficha Clínica<br/><em>Dermatológica</em></h1>
+    <div class="hero-meta">
+      <div class="status-pill" style="float:right; margin-bottom:.5rem"><span class="status-dot"></span> Usado por médicos reales</div><br/>
+      Aplicación Web Full-Stack<br/>
+      React · TypeScript · Supabase<br/><br/>
+      Rol: Fullstack Developer<br/>
+      Arquitectura · Implementación · Deploy<br/><br/>
+      2024 – 2025
+    </div>
+  </div>
+
+  <div class="main-grid">
+
+    <div style="grid-column: 1 / -1; animation: fadeUp .5s ease both; animation-delay: .08s;">
+      <img src="derma1.png" alt="Vista Principal Ficha Clínica" class="hero-image" />
+      <div class="project-gallery">
+        <img src="derma2.png" alt="Vista de Pacientes Dermatología" loading="lazy" />
+        <img src="derma3.png" alt="Detalle de Tratamiento" loading="lazy" />
+      </div>
+    </div>
+
+    <div class="card card--desc">
+      <div class="card-label">Sistema clínico crítico</div>
+      <p class="desc-text">
+        Sistema integral de <strong>gestión de fichas clínicas dermatológicas</strong> diseñado para profesionales de la salud. Permite registrar, buscar y exportar historiales de pacientes con soporte de imágenes, diagnósticos clínicos e histopatológicos, y localización anatómica interactiva.<br/><br/>
+        Incluye una <strong>red social médica privada</strong> donde los especialistas comparten casos, debaten diagnósticos y acumulan reputación por contribución.
+      </p>
+      <div class="context-box">
+        <div class="context-box-title">¿Por qué Offline-First?</div>
+        <p>El sistema opera en entornos con conectividad intermitente — clínicas con red inestable y zonas rurales. La continuidad operativa no puede depender de la conexión: los médicos deben poder registrar fichas, cargar imágenes y consultar historiales sin interrupciones, sincronizando automáticamente cuando la red regresa.</p>
+      </div>
+    </div>
+
+    <div class="card card--features">
+      <div class="card-label">Funcionalidades clave</div>
+      <ul class="feature-list">
+        <li><span class="feature-icon fi-rose">🔐</span> Autenticación con flujo de aprobación por administrador e invitaciones por email</li>
+        <li><span class="feature-icon fi-blue">🧠</span> Selector anatómico SVG interactivo para localizar lesiones — 30+ ubicaciones</li>
+        <li><span class="feature-icon fi-green">📶</span> Offline-first completo: fichas e imágenes guardadas localmente, sincronización automática</li>
+        <li><span class="feature-icon fi-amber">📸</span> Carga múltiple de imágenes (hasta 5 por ficha) con previsualización en tiempo real</li>
+        <li><span class="feature-icon fi-indigo">📊</span> Exportación a CSV y PDF con filtros avanzados por fecha, edad, sexo y fototipo</li>
+        <li><span class="feature-icon fi-teal">👥</span> Red social con posts, comentarios, likes, bookmarks, debates y mejor respuesta</li>
+        <li><span class="feature-icon fi-purple">🔔</span> Notificaciones push mediante Service Worker (PWA instalable en dispositivo)</li>
+        <li><span class="feature-icon fi-rose">🛡️</span> Panel admin: aprobar/rechazar usuarios, eliminar cuentas preservando datos clínicos</li>
+      </ul>
+    </div>
+
+    <div class="card card--offline">
+      <div class="card-label">Arquitectura Offline-First — Manejo de sincronización</div>
+      <div class="offline-grid">
+        <div class="offline-item">
+          <div class="offline-item-icon">🗄️</div>
+          <div class="offline-item-title">Cola persistente local</div>
+          <div class="offline-item-desc">Fichas e imágenes (base64) guardadas en IndexedDB con identificadores únicos locales. Sin pérdida de datos.</div>
+        </div>
+        <div class="offline-item">
+          <div class="offline-item-icon">🔄</div>
+          <div class="offline-item-title">Sincronización automática</div>
+          <div class="offline-item-desc">Al detectar reconexión: upload automático a Supabase Storage con máx. 3 reintentos y limpieza de cola exitosa.</div>
+        </div>
+        <div class="offline-item">
+          <div class="offline-item-icon">⚡</div>
+          <div class="offline-item-title">Optimistic updates</div>
+          <div class="offline-item-desc">UI actualiza antes de confirmar en servidor (likes, bookmarks). Rollback automático si falla la operación.</div>
+        </div>
+        <div class="offline-item">
+          <div class="offline-item-icon">🛡️</div>
+          <div class="offline-item-title">Manejo de errores de red</div>
+          <div class="offline-item-desc">Estrategia de reintentos escalonada con feedback visual al usuario. Operaciones críticas nunca se pierden silenciosamente.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card--stack">
+      <div class="card-label">Stack tecnológico</div>
+      <div class="stack-grid">
+        <div class="tech-item"><span class="tech-dot" style="background:#61dafb"></span><div><div class="tech-name">React 18</div><div class="tech-role">UI · SPA · Estado</div></div></div>
+        <div class="tech-item"><span class="tech-dot" style="background:#3178c6"></span><div><div class="tech-name">TypeScript</div><div class="tech-role">Tipado estático</div></div></div>
+        <div class="tech-item"><span class="tech-dot" style="background:#646cff"></span><div><div class="tech-name">Vite</div><div class="tech-role">Bundler / Dev</div></div></div>
+        <div class="tech-item"><span class="tech-dot" style="background:#38bdf8"></span><div><div class="tech-name">Tailwind CSS</div><div class="tech-role">Estilos utilitarios</div></div></div>
+        <div class="tech-item"><span class="tech-dot" style="background:#1a1a1a"></span><div><div class="tech-name">shadcn/ui</div><div class="tech-role">Componentes UI</div></div></div>
+        <div class="tech-item"><span class="tech-dot" style="background:#ff4154"></span><div><div class="tech-name">React Query</div><div class="tech-role">Caché · Sync server</div></div></div>
+        <div class="tech-item"><span class="tech-dot" style="background:#3ecf8e"></span><div><div class="tech-name">Supabase</div><div class="tech-role">BaaS · Auth · BD</div></div></div>
+        <div class="tech-item"><span class="tech-dot" style="background:#3ecf8e"></span><div><div class="tech-name">Supabase Storage</div><div class="tech-role">Imágenes clínicas</div></div></div>
+        <div class="tech-item"><span class="tech-dot" style="background:#3ecf8e"></span><div><div class="tech-name">Edge Functions</div><div class="tech-role">Lógica server-side</div></div></div>
+        <div class="tech-item"><span class="tech-dot" style="background:#336791"></span><div><div class="tech-name">PostgreSQL</div><div class="tech-role">Persistencia · RLS</div></div></div>
+        <div class="tech-item"><span class="tech-dot" style="background:#555"></span><div><div class="tech-name">Service Worker</div><div class="tech-role">PWA · Offline</div></div></div>
+        <div class="tech-item"><span class="tech-dot" style="background:#e76f51"></span><div><div class="tech-name">jsPDF</div><div class="tech-role">Exportación PDF</div></div></div>
+        <div class="tech-item"><span class="tech-dot" style="background:#f43f5e"></span><div><div class="tech-name">Sonner</div><div class="tech-role">Notificaciones UI</div></div></div>
+        <div class="tech-item"><span class="tech-dot" style="background:#a78bfa"></span><div><div class="tech-name">date-fns</div><div class="tech-role">Manejo de fechas</div></div></div>
+      </div>
+    </div>
+
+    <div class="card card--metrics">
+      <div class="metric"><div class="metric-num">✔</div><div class="metric-label">Producción activa</div></div>
+      <div class="metric"><div class="metric-num">100%</div><div class="metric-label">Offline capable</div></div>
+      <div class="metric"><div class="metric-num">8</div><div class="metric-label">Módulos funcionales</div></div>
+      <div class="metric"><div class="metric-num">5</div><div class="metric-label">Tipos de exportación</div></div>
+      <div class="metric"><div class="metric-num">PWA</div><div class="metric-label">Instalable</div></div>
+    </div>
+
+    <div class="card card--challenges">
+      <div class="card-label">Desafíos técnicos resueltos</div>
+      <div class="challenge-item">
+        <div class="challenge-title">Cola offline robusta con reintentos</div>
+        <div class="challenge-desc">Diseño de cola persistente con encriptación en localStorage, imágenes como base64 y re-upload automático con reintentos (máx. 3) al recuperar conexión. Sin pérdida de datos en ningún escenario.</div>
+      </div>
+      <div class="challenge-item">
+        <div class="challenge-title">Flujo de aprobación de usuarios</div>
+        <div class="challenge-desc">Sistema en dos etapas vía Edge Functions: solicitud → revisión admin → invitación por email con link seguro para establecer contraseña. Aprobación controlada sin exposición de datos.</div>
+      </div>
+      <div class="challenge-item">
+        <div class="challenge-title">Selector anatómico SVG interactivo</div>
+        <div class="challenge-desc">Mapa corporal construido en SVG puro con detección de zona, feedback visual inmediato y lista de acceso rápido para 30+ localizaciones anatómicas.</div>
+      </div>
+      <div class="challenge-item">
+        <div class="challenge-title">Eliminación segura preservando auditoría</div>
+        <div class="challenge-desc">Edge Function borra de auth.users e invalida sesiones activas, pero preserva fichas clínicas (user_id → NULL) para garantizar continuidad de la auditoría médica.</div>
+      </div>
+    </div>
+
+    <div class="card card--role">
+      <div class="card-label">Mi rol &amp; contexto</div>
+      <div class="role-section">
+        <div class="role-title">Rol</div>
+        <div class="role-text"><strong>Fullstack Developer</strong> — Responsable de arquitectura, implementación y despliegue.</div>
+      </div>
+      <div class="role-section">
+        <div class="role-title">Estado del proyecto</div>
+        <div class="role-text">✔ En producción activa<br/>✔ Siendo usado por médicos reales<br/>✔ Feedback directo e iteración continua</div>
+      </div>
+      <div class="role-section">
+        <div class="role-title">Responsabilidades</div>
+        <div class="role-text">Arquitectura de datos en PostgreSQL, sistema de auth personalizado, todos los componentes React, módulo social, lógica de sincronización offline y despliegue en producción.</div>
+      </div>
+      <div class="role-section">
+        <div class="role-title">Tipo de aplicación</div>
+        <div class="tag-row">
+          <span class="tag">Sistema Clínico Crítico</span>
+          <span class="tag">PWA</span>
+          <span class="tag">Offline-First</span>
+          <span class="tag">Multi-usuario</span>
+          <span class="tag">Role-based</span>
+        </div>
+      </div>
+      <div class="role-section">
+        <div class="role-title">Seguridad implementada</div>
+        <div class="role-text">Rate limiting en login, sanitización XSS, validación de tipos/tamaños de archivos, Row Level Security en Supabase, encriptación de datos offline y CSP headers.</div>
+      </div>
+    </div>
+
+    <div class="card card--links">
+      <div class="links-left">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span class="private-note-text">Código <strong>privado por acuerdo con el cliente</strong> — disponible para revisión en entrevista técnica. Cualquier duda o consulta, escríbeme.</span>
+      </div>
+      <div class="btn-group">
+        <a href="mailto:" class="btn btn-outline">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Consultar proyecto
+        </a>
+        <a href="mailto:" class="btn btn-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Contactar
+        </a>
+      </div>
+    </div>
+
+  </div></div></body>
+</html>
