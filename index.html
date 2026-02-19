@@ -3,20 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Juan Miguel — Portfolio</title>
+<title>Portfolio — Desarrollo de Soluciones Web</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --bg: #080808;
-    --surface: rgba(255, 255, 255, 0.03);
+    --bg: #050505;
+    --surface: #121212;
+    --surface-hover: #1a1a1a;
     --border: rgba(255, 255, 255, 0.08);
-    --text: #ffffff;
-    --muted: #a1a1a1;
-    --accent-glow: rgba(255, 255, 255, 0.05);
-    /* Colores de acento refinados */
-    --c1: #ff3c78; --c2: #ffb236; --c3: #4ade80; --c4: #3b82f6;
+    --text: #f8f8f8;
+    --muted: #888888;
+    --accent1: #ff4747; /* Wuara */
+    --accent2: #ff8c3a; /* Ferretería */
+    --accent3: #f45b9f; /* Ficha Clínica */
+    --accent4: #f59e0b; /* Panadería */
   }
 
   html { scroll-behavior: smooth; }
@@ -25,47 +27,53 @@
     background: var(--bg);
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
     overflow-x: hidden;
     line-height: 1.6;
-    /* Efecto de grano sutil */
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    background-attachment: fixed;
-    opacity: 0.98;
-  }
-
-  /* Animación de fondo */
-  .glow-bg {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle at 50% -20%, #1a1a1a 0%, transparent 50%);
-    z-index: -1;
-    pointer-events: none;
+    -webkit-font-smoothing: antialiased;
   }
 
   /* ---- NAVEGACIÓN ---- */
   nav {
     position: fixed;
-    top: 20px; left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    width: 90%;
-    max-width: 1200px;
-    padding: 1rem 2rem;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.2rem 6vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(15, 15, 15, 0.7);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border);
-    border-radius: 100px;
+    background: rgba(5, 5, 5, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
   }
 
-  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { 
-    text-decoration: none; color: var(--muted); font-size: 0.8rem; 
-    text-transform: uppercase; font-weight: 600; transition: 0.3s;
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
   }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 400;
+    transition: color 0.3s ease;
+  }
+
   .nav-links a:hover { color: var(--text); }
 
   /* ---- HERO ---- */
@@ -74,240 +82,433 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0 10vw;
-    text-align: center;
+    padding: 8rem 6vw 4rem;
+    position: relative;
+    /* Brillo de fondo sutil */
+    background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.03) 0%, transparent 50%);
   }
 
   .hero-tag {
     font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
     color: var(--muted);
-    letter-spacing: 0.4em;
-    font-size: 0.7rem;
     margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--muted);
   }
 
   .hero h1 {
     font-family: 'Syne', sans-serif;
     font-weight: 800;
-    font-size: clamp(3rem, 10vw, 8rem);
-    line-height: 0.9;
-    letter-spacing: -0.05em;
-    margin-bottom: 2rem;
+    font-size: clamp(3rem, 8vw, 7.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
   }
 
-  .hero h1 span {
-    background: linear-gradient(to right, #fff 20%, #666 80%);
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, #ffffff 0%, #666666 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
-  /* ---- GRID DE PROYECTOS ---- */
-  .section-label {
-    padding: 0 10vw;
-    font-family: 'Syne', sans-serif;
-    font-size: 0.8rem;
+  .hero-sub {
+    max-width: 550px;
+    font-size: 1.15rem;
     color: var(--muted);
-    margin-bottom: 3rem;
+    line-height: 1.8;
   }
 
+  /* ---- SECCIONES ---- */
+  .section { padding: 8rem 6vw; }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  /* ---- GRILLA DE PROYECTOS (BENTO MODERNO) ---- */
   .projects-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    padding: 0 10vw 8rem;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem; /* Gap real en lugar de bordes finos */
   }
 
   .project-card {
     position: relative;
+    overflow: hidden;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 2rem;
-    padding: 3rem;
+    border-radius: 1.5rem; /* Bordes redondeados modernos */
     text-decoration: none;
     color: inherit;
-    overflow: hidden;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-  }
-
-  .project-card::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), var(--accent-glow) 0%, transparent 50%);
-    opacity: 0; transition: opacity 0.3s;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.4s;
   }
 
   .project-card:hover {
-    transform: translateY(-10px) scale(1.02);
+    transform: translateY(-8px);
     border-color: rgba(255,255,255,0.2);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
   }
 
-  .project-card:hover::before { opacity: 1; }
+  .project-card:nth-child(1), .project-card:nth-child(4) { grid-column: span 7; }
+  .project-card:nth-child(2), .project-card:nth-child(3) { grid-column: span 5; }
 
-  .p-category { 
-    font-size: 0.7rem; color: var(--muted); 
-    text-transform: uppercase; letter-spacing: 0.2em;
-    margin-bottom: 1rem; display: block;
+  .card-inner {
+    padding: 3.5rem 3rem;
+    height: 100%;
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 2;
+    position: relative;
   }
 
-  .p-title {
+  .card-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.15;
+    transition: opacity 0.6s ease, transform 0.8s ease;
+    filter: grayscale(80%);
+  }
+
+  /* Degradado para asegurar que el texto sea siempre legible sobre la imagen */
+  .card-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 0%, var(--bg) 100%);
+    opacity: 0.8;
+  }
+
+  .project-card:hover .card-bg {
+    opacity: 0.4;
+    transform: scale(1.08);
+    filter: grayscale(0%);
+  }
+
+  .card-accent {
+    width: 40px;
+    height: 3px;
+    margin-bottom: 2rem;
+    border-radius: 3px;
+    transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .project-card:hover .card-accent { width: 100px; }
+
+  .card-title {
     font-family: 'Syne', sans-serif;
-    font-size: 2.5rem; font-weight: 800;
-    margin-bottom: 1rem; line-height: 1;
+    font-weight: 800;
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
   }
 
-  .p-desc { color: var(--muted); margin-bottom: 2rem; font-size: 0.95rem; }
-
-  .p-footer {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-top: auto;
+  .card-desc {
+    font-size: 1rem;
+    color: #cccccc;
+    max-width: 400px;
+    margin-bottom: 2rem;
+    line-height: 1.6;
   }
 
-  .btn-circle {
-    width: 50px; height: 50px;
-    border-radius: 50%;
+  /* Etiquetas estilo píldora */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    transition: 0.3s;
+    color: var(--text);
+    backdrop-filter: blur(5px);
   }
 
-  .project-card:hover .btn-circle {
-    background: #fff; color: #000;
+  .card-cta {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 2rem;
+    transition: gap 0.3s;
   }
 
-  /* Colores de acento */
-  .p1:hover .p-title { color: var(--c1); }
-  .p2:hover .p-title { color: var(--c2); }
-  .p3:hover .p-title { color: var(--c3); }
-  .p4:hover .p-title { color: var(--c4); }
+  .project-card:hover .card-cta {
+    gap: 1rem;
+  }
+
+  /* Colores por proyecto */
+  .p1 { --c: var(--accent3); } .p1 .card-accent { background: var(--c); } .p1 .card-cta { color: var(--c); }
+  .p2 { --c: var(--accent2); } .p2 .card-accent { background: var(--c); } .p2 .card-cta { color: var(--c); }
+  .p3 { --c: var(--accent1); } .p3 .card-accent { background: var(--c); } .p3 .card-cta { color: var(--c); }
+  .p4 { --c: var(--accent4); } .p4 .card-accent { background: var(--c); } .p4 .card-cta { color: var(--c); }
+
+  /* ---- SOBRE MÍ ---- */
+  .about-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6vw;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .about-strip h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+  }
+
+  .about-strip em {
+    font-style: normal;
+    color: var(--muted);
+  }
+
+  .about-text p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+  }
 
   /* ---- CONTACTO ---- */
-  .contact-box {
-    margin: 4rem 10vw;
-    padding: 6rem;
-    background: #111;
-    border-radius: 3rem;
+  .contact-section {
     text-align: center;
-    border: 1px solid var(--border);
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 10rem 6vw;
   }
 
-  .contact-box h2 {
+  .contact-title {
     font-family: 'Syne', sans-serif;
-    font-size: clamp(2rem, 5vw, 4rem);
-    margin-bottom: 2rem;
-  }
-
-  .github-btn {
-    padding: 1.5rem 4rem;
-    background: #fff;
-    color: #000;
-    text-decoration: none;
-    border-radius: 100px;
+    font-size: clamp(4rem, 12vw, 9rem);
     font-weight: 800;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    transition: 0.3s;
+    margin-bottom: 2rem;
     display: inline-block;
+    color: var(--text);
+    text-decoration: none;
+    transition: transform 0.4s, opacity 0.4s;
+    letter-spacing: -0.04em;
   }
 
-  .github-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255,255,255,0.2); }
+  .contact-title:hover { 
+    opacity: 0.8;
+    transform: scale(0.98);
+  }
 
-  /* ---- REVELADO ---- */
-  [data-reveal] { opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
-  [data-reveal].visible { opacity: 1; transform: translateY(0); }
+  .social-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .social-links p {
+    color: var(--muted);
+    font-size: 1rem;
+  }
+
+  /* ---- FOOTER ---- */
+  footer {
+    padding: 3rem 6vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  /* ---- ANIMACIONES ---- */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  [data-reveal].visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
   @media (max-width: 900px) {
-    .projects-grid { grid-template-columns: 1fr; }
-    .contact-box { padding: 3rem 1.5rem; }
-    nav { width: 95%; padding: 0.8rem 1.2rem; }
+    .project-card:nth-child(n) { grid-column: span 12; }
+    .about-strip { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .card-inner { padding: 2.5rem; min-height: 400px; }
+    .hero { padding-top: 10rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
   }
 </style>
 </head>
 <body>
 
-<div class="glow-bg"></div>
-
 <nav>
-  <div class="nav-logo">JM.</div>
+  <div class="nav-logo">PORTFOLIO.</div>
   <ul class="nav-links">
-    <li><a href="#proyectos">Work</a></li>
-    <li><a href="#contacto">Github</a></li>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#sobre">Sobre mí</a></li>
+    <li><a href="#contacto">Contacto</a></li>
   </ul>
 </nav>
 
 <section class="hero">
   <div data-reveal>
-    <p class="hero-tag">DEVELOPER & DESIGNER</p>
-    <h1><span>Digital</span><br>Architect</h1>
+    <p class="hero-tag">Desarrollo Web & Sistemas Digitales</p>
+    <h1>Soluciones<br><em>Digitales</em><br>de alto impacto.</h1>
+    <p class="hero-sub">Especializado en transformar procesos complejos en herramientas simples, escalables y visualmente impecables.</p>
   </div>
 </section>
 
-<p class="section-label" id="proyectos">/ Selected Projects</p>
+<section class="section" id="proyectos">
+  <div data-reveal>
+    <p class="section-label">Trabajos Seleccionados</p>
+  </div>
+  
+  <div class="projects-grid">
+    <a href="proyecto1-ficha-clinica.html" class="project-card p1" data-reveal>
+      <div class="card-bg" style="background-image:url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=900&q=60')"></div>
+      <div class="card-inner">
+        <div>
+          <div class="card-accent"></div>
+          <p style="font-size:0.75rem; font-weight:700; color:rgba(255,255,255,0.6); margin-bottom:1rem; letter-spacing:0.1em;">01 / SALUD</p>
+          <h2 class="card-title">Ficha Clínica Dermatológica</h2>
+          <p class="card-desc">Digitalización total de historiales médicos con red social privada para especialistas.</p>
+          <div class="tags">
+            <span class="tag">Supabase</span> <span class="tag">React</span> <span class="tag">Comunidad</span>
+          </div>
+        </div>
+        <span class="card-cta">Explorar caso de estudio ↗</span>
+      </div>
+    </a>
 
-<section class="projects-grid">
-  <a href="#" class="project-card p1" data-reveal>
-    <span class="p-category">Health Tech</span>
-    <h2 class="p-title">Ficha Clínica</h2>
-    <p class="p-desc">Ecosistema digital para la gestión dermatológica de alta precisión.</p>
-    <div class="p-footer">
-      <div class="btn-circle">↗</div>
-    </div>
-  </a>
+    <a href="proyecto2-ferreteria-pos.html" class="project-card p2" data-reveal>
+      <div class="card-bg" style="background-image:url('https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=700&q=60')"></div>
+      <div class="card-inner">
+        <div>
+          <div class="card-accent"></div>
+          <p style="font-size:0.75rem; font-weight:700; color:rgba(255,255,255,0.6); margin-bottom:1rem; letter-spacing:0.1em;">02 / COMERCIO</p>
+          <h2 class="card-title">Ferretería POS & Stock</h2>
+          <p class="card-desc">Sistema punto de venta con control de inventario inteligente y analíticas en tiempo real.</p>
+          <div class="tags">
+            <span class="tag">Inventario</span> <span class="tag">Dashboard</span>
+          </div>
+        </div>
+        <span class="card-cta">Explorar caso de estudio ↗</span>
+      </div>
+    </a>
 
-  <a href="#" class="project-card p2" data-reveal>
-    <span class="p-category">Fintech / POS</span>
-    <h2 class="p-title">Ferretería POS</h2>
-    <p class="p-desc">Control de inventarios y ventas con análisis predictivo.</p>
-    <div class="p-footer">
-      <div class="btn-circle">↗</div>
-    </div>
-  </a>
+    <a href="proyecto3-wuara-media.html" class="project-card p3" data-reveal>
+      <div class="card-bg" style="background-image:url('logowuara.jpg')"></div>
+      <div class="card-inner">
+        <div>
+          <div class="card-accent"></div>
+          <p style="font-size:0.75rem; font-weight:700; color:rgba(255,255,255,0.6); margin-bottom:1rem; letter-spacing:0.1em;">03 / MEDIA</p>
+          <h2 class="card-title">Wuara Media Reality</h2>
+          <p class="card-desc">Plataforma de gestión de castings y patrocinios para el primer reality show de Cuba.</p>
+          <div class="tags">
+            <span class="tag">Entretenimiento</span> <span class="tag">Multilingüe</span>
+          </div>
+        </div>
+        <span class="card-cta">Explorar caso de estudio ↗</span>
+      </div>
+    </a>
 
-  <a href="#" class="project-card p3" data-reveal>
-    <span class="p-category">Media & TV</span>
-    <h2 class="p-title">Wuara Media</h2>
-    <p class="p-desc">Gestión masiva de castings para la industria del entretenimiento.</p>
-    <div class="p-footer">
-      <div class="btn-circle">↗</div>
-    </div>
-  </a>
-
-  <a href="#" class="project-card p4" data-reveal>
-    <span class="p-category">Industrial</span>
-    <h2 class="p-title">Panadería 4.0</h2>
-    <p class="p-desc">Optimización de producción y mermas en tiempo real.</p>
-    <div class="p-footer">
-      <div class="btn-circle">↗</div>
-    </div>
-  </a>
+    <a href="proyecto4-panaderia-digital.html" class="project-card p4" data-reveal>
+      <div class="card-bg" style="background-image:url('https://images.unsplash.com/photo-1509440159596-0249088772ff?w=900&q=60')"></div>
+      <div class="card-inner">
+        <div>
+          <div class="card-accent"></div>
+          <p style="font-size:0.75rem; font-weight:700; color:rgba(255,255,255,0.6); margin-bottom:1rem; letter-spacing:0.1em;">04 / INDUSTRIAL</p>
+          <h2 class="card-title">Panadería Digital</h2>
+          <p class="card-desc">Control total de producción, mermas e insumos con gestión granular de permisos.</p>
+          <div class="tags">
+            <span class="tag">Producción</span> <span class="tag">Roles</span>
+          </div>
+        </div>
+        <span class="card-cta">Explorar caso de estudio ↗</span>
+      </div>
+    </a>
+  </div>
 </section>
 
-<section class="contact-box" id="contacto" data-reveal>
-  <h2>¿Listo para el siguiente nivel?</h2>
-  <a href="https://github.com/JuanMiguel01" target="_blank" class="github-btn">Ver código en GitHub</a>
+<section class="section about-strip" id="sobre">
+  <div data-reveal>
+    <h2>Construyo<br>productos que<br><em>resuelven.</em></h2>
+  </div>
+  <div class="about-text" data-reveal>
+    <p style="margin-bottom:1.5rem">Mi enfoque no es solo escribir código, sino entender el negocio. He ayudado a médicos, dueños de ferreterías y equipos de producción a eliminar el papel y digitalizar su éxito.</p>
+    <p style="color:var(--muted)">Cada proyecto es una oportunidad para crear un sistema robusto que sea un placer usar todos los días.</p>
+  </div>
 </section>
+
+<section class="section contact-section" id="contacto">
+  <div data-reveal>
+    <a href="https://github.com/JuanMiguel01" class="contact-title" target="_blank">GitHub.</a>
+    <div class="social-links">
+      <p>Explora el código fuente de mis proyectos públicos.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025–2026 — Portfolio</p>
+  <p>Construido con enfoque en rendimiento y claridad.</p>
+</footer>
 
 <script>
-  // Animación de entrada
+  // Observador para animaciones de entrada (ajustado para mayor fluidez)
+  const observerOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Opcional: Descomenta la siguiente línea si quieres que la animación ocurra solo una vez
+        // observer.unobserve(entry.target); 
+      }
     });
-  }, { threshold: 0.1 });
+  }, observerOptions);
 
   document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
-
-  // Efecto de brillo que sigue al mouse en las tarjetas
-  document.querySelectorAll('.project-card').forEach(card => {
-    card.onmousemove = e => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--x', `${x}px`);
-      card.style.setProperty('--y', `${y}px`);
-    };
-  });
 </script>
 
 </body>
