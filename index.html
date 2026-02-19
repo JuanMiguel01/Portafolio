@@ -3,513 +3,1015 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio — Desarrollo de Soluciones Web</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<title>Portfolio — Soluciones Digitales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Instrument+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-  :root {
-    --bg: #050505;
-    --surface: #121212;
-    --surface-hover: #1a1a1a;
-    --border: rgba(255, 255, 255, 0.08);
-    --text: #f8f8f8;
-    --muted: #888888;
-    --accent1: #ff4747; /* Wuara */
-    --accent2: #ff8c3a; /* Ferretería */
-    --accent3: #f45b9f; /* Ficha Clínica */
-    --accent4: #f59e0b; /* Panadería */
+:root {
+  --bg: #08080c;
+  --ink: #f0ede8;
+  --dim: #6b6870;
+  --gold: #c8a96e;
+  --gold-light: #e8d5a8;
+  --crimson: #b84040;
+  --slate: #1c1c24;
+  --glass: rgba(240,237,232,0.04);
+  --glass-border: rgba(240,237,232,0.09);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CURSOR PERSONALIZADO */
+.cursor {
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s;
+}
+
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(200, 169, 110, 0.4);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transition: all 0.15s ease;
+}
+
+body:has(a:hover) .cursor-ring {
+  width: 56px; height: 56px;
+  border-color: var(--gold);
+}
+
+/* GRAIN OVERLAY */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  mix-blend-mode: overlay;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.5rem 5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 5vw; right: 5vw;
+  height: 1px;
+  background: var(--glass-border);
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+}
+
+.nav-logo span { color: var(--gold); }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--dim);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 400;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--ink); }
+
+.nav-cta {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.nav-cta:hover {
+  background: var(--gold);
+  color: var(--bg);
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  padding: 0 5vw 6rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Orbe de fondo animado */
+.hero::before {
+  content: '';
+  position: absolute;
+  width: 900px;
+  height: 900px;
+  top: -200px; right: -200px;
+  background: radial-gradient(circle, rgba(200,169,110,0.06) 0%, transparent 65%);
+  border-radius: 50%;
+  animation: breathe 8s ease-in-out infinite;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  bottom: 0; left: 20%;
+  background: radial-gradient(circle, rgba(184,64,64,0.05) 0%, transparent 65%);
+  border-radius: 50%;
+  animation: breathe 10s ease-in-out infinite reverse;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1) translate(0,0); opacity: 0.7; }
+  50% { transform: scale(1.1) translate(-20px,30px); opacity: 1; }
+}
+
+.hero-left {
+  padding-top: 14rem;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.hero-eyebrow-line {
+  width: 48px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.hero-eyebrow span {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.hero-h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.5rem, 7vw, 7rem);
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin-bottom: 2.5rem;
+}
+
+.hero-h1 .italic {
+  font-style: italic;
+  color: var(--dim);
+}
+
+.hero-h1 .accent-word {
+  position: relative;
+  display: inline-block;
+}
+
+.hero-h1 .accent-word::after {
+  content: '';
+  position: absolute;
+  bottom: 4px; left: 0; right: 0;
+  height: 3px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: underlineIn 1.2s 1s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+
+@keyframes underlineIn { to { transform: scaleX(1); } }
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: var(--dim);
+  line-height: 1.85;
+  max-width: 400px;
+  margin-bottom: 3rem;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 3rem;
+}
+
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 0.3rem;
+}
+
+.hero-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding-top: 14rem;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-visual {
+  width: 340px;
+  height: 420px;
+  border: 1px solid var(--glass-border);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.5;
+  filter: grayscale(60%) sepia(20%);
+  display: block;
+}
+
+.hero-visual::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--bg) 0%, transparent 50%);
+  z-index: 1;
+}
+
+.hero-visual-label {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 2;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.scroll-hint span {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--dim);
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(to bottom, var(--dim), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+  50% { opacity: 1; }
+  100% { opacity: 0; transform: scaleY(1); transform-origin: top; }
+}
+
+/* MARQUEE */
+.marquee-section {
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 1.2rem 0;
+  overflow: hidden;
+  background: var(--slate);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 0;
+  white-space: nowrap;
+  animation: marquee 22s linear infinite;
+  width: max-content;
+}
+
+.marquee-track span {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--dim);
+  padding: 0 3rem;
+}
+
+.marquee-track .dot {
+  color: var(--gold);
+  font-style: normal;
+}
+
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* PROYECTOS */
+.projects-section {
+  padding: 10rem 5vw;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 6rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 4vw, 3.8rem);
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.section-title em { font-style: italic; color: var(--dim); }
+
+.section-count {
+  font-family: 'Space Mono', monospace;
+  font-size: 5rem;
+  font-weight: 400;
+  color: rgba(240,237,232,0.04);
+  line-height: 1;
+}
+
+/* PROYECTOS - LISTA EDITORIAL */
+.projects-list { display: flex; flex-direction: column; }
+
+.project-item {
+  display: grid;
+  grid-template-columns: 80px 1fr 320px 160px;
+  align-items: center;
+  gap: 3rem;
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--glass-border);
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
+  group: true;
+}
+
+.project-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass);
+  opacity: 0;
+  transition: opacity 0.4s;
+  border-radius: 4px;
+  margin: 0 -1.5rem;
+  padding: 0 1.5rem;
+}
+
+.project-item:hover::before { opacity: 1; }
+.project-item:hover { padding-left: 1rem; padding-right: 1rem; }
+
+.proj-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+}
+
+.proj-info { position: relative; z-index: 1; }
+
+.proj-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  transition: color 0.3s;
+}
+
+.project-item:hover .proj-title { color: var(--gold-light); }
+
+.proj-sub {
+  font-size: 0.88rem;
+  color: var(--dim);
+  line-height: 1.6;
+}
+
+.proj-preview {
+  width: 320px;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 4px;
+  opacity: 0;
+  transform: scale(0.9) translateY(10px);
+  transition: all 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+
+.project-item:hover .proj-preview {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.proj-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(40%) sepia(10%);
+  transition: filter 0.6s;
+}
+
+.project-item:hover .proj-preview img { filter: grayscale(0); }
+
+.proj-arrow {
+  font-size: 0.8rem;
+  color: var(--dim);
+  text-align: right;
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 0.1em;
+  transition: all 0.3s;
+  position: relative;
+  z-index: 1;
+}
+
+.project-item:hover .proj-arrow {
+  color: var(--gold);
+  transform: translateX(8px);
+}
+
+.proj-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.8rem;
+}
+
+.proj-tag {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--glass-border);
+  color: var(--dim);
+  border-radius: 2px;
+}
+
+/* ABOUT */
+.about-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 70vh;
+}
+
+.about-left {
+  background: var(--slate);
+  padding: 8rem 5vw 8rem 5vw;
+  border-right: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about-right {
+  padding: 8rem 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-right::before {
+  content: '"';
+  position: absolute;
+  top: 4rem;
+  left: 3vw;
+  font-family: 'Playfair Display', serif;
+  font-size: 20rem;
+  line-height: 1;
+  color: rgba(200,169,110,0.05);
+  pointer-events: none;
+}
+
+.about-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 4.5vw, 4rem);
+  font-weight: 900;
+  line-height: 1.08;
+  margin-bottom: 2rem;
+}
+
+.about-title em { font-style: italic; color: var(--gold); }
+
+.about-body {
+  font-size: 1.05rem;
+  color: var(--dim);
+  line-height: 1.9;
+  max-width: 460px;
+}
+
+.about-body p + p { margin-top: 1.5rem; }
+
+.skill-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  border: 1px solid var(--glass-border);
+  margin-top: 3rem;
+  background: var(--glass-border);
+}
+
+.skill-item {
+  padding: 1.5rem;
+  background: var(--slate);
+}
+
+.skill-name {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.4rem;
+}
+
+.skill-desc {
+  font-size: 0.85rem;
+  color: var(--dim);
+  line-height: 1.6;
+}
+
+/* CONTACTO */
+.contact-section {
+  padding: 12rem 5vw;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--glass-border);
+}
+
+.contact-section::before {
+  content: '';
+  position: absolute;
+  width: 800px; height: 800px;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  background: radial-gradient(circle, rgba(200,169,110,0.06) 0%, transparent 60%);
+  border-radius: 50%;
+}
+
+.contact-pre {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.contact-big {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 9vw, 8.5rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 1rem;
+  transition: color 0.4s;
+  position: relative;
+}
+
+.contact-big:hover { color: var(--gold-light); }
+
+.contact-big em {
+  font-style: italic;
+  color: var(--dim);
+}
+
+.contact-sub {
+  font-size: 1rem;
+  color: var(--dim);
+  margin-bottom: 3.5rem;
+  position: relative;
+}
+
+.btn-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2.5rem;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  text-decoration: none;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-github::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+
+.btn-github:hover::before { transform: translateX(0); }
+.btn-github:hover { color: var(--bg); }
+.btn-github span { position: relative; z-index: 1; }
+
+/* FOOTER */
+footer {
+  padding: 2.5rem 5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--glass-border);
+  background: var(--slate);
+}
+
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.footer-logo span { color: var(--gold); }
+
+.footer-copy {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--dim);
+}
+
+/* ANIMATIONS */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-reveal].visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-reveal-delay="1"] { transition-delay: 0.15s; }
+[data-reveal-delay="2"] { transition-delay: 0.3s; }
+[data-reveal-delay="3"] { transition-delay: 0.45s; }
+
+/* RESPONSIVE */
+@media (max-width: 1000px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .project-item {
+    grid-template-columns: 50px 1fr;
+    gap: 1.5rem;
   }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* ---- NAVEGACIÓN ---- */
-  nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    padding: 1.2rem 6vw;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(5, 5, 5, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 1.2rem;
-    letter-spacing: -0.02em;
-    color: var(--text);
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    text-decoration: none;
-    color: var(--muted);
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 400;
-    transition: color 0.3s ease;
-  }
-
-  .nav-links a:hover { color: var(--text); }
-
-  /* ---- HERO ---- */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 8rem 6vw 4rem;
-    position: relative;
-    /* Brillo de fondo sutil */
-    background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.03) 0%, transparent 50%);
-  }
-
-  .hero-tag {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .hero-tag::before {
-    content: '';
-    width: 40px;
-    height: 1px;
-    background: var(--muted);
-  }
-
-  .hero h1 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(3rem, 8vw, 7.5rem);
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
-  }
-
-  .hero h1 em {
-    font-style: normal;
-    background: linear-gradient(135deg, #ffffff 0%, #666666 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .hero-sub {
-    max-width: 550px;
-    font-size: 1.15rem;
-    color: var(--muted);
-    line-height: 1.8;
-  }
-
-  /* ---- SECCIONES ---- */
-  .section { padding: 8rem 6vw; }
-
-  .section-label {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 4rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  /* ---- GRILLA DE PROYECTOS (BENTO MODERNO) ---- */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 1.5rem; /* Gap real en lugar de bordes finos */
-  }
-
-  .project-card {
-    position: relative;
-    overflow: hidden;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 1.5rem; /* Bordes redondeados modernos */
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.4s;
-  }
-
-  .project-card:hover {
-    transform: translateY(-8px);
-    border-color: rgba(255,255,255,0.2);
-  }
-
-  .project-card:nth-child(1), .project-card:nth-child(4) { grid-column: span 7; }
-  .project-card:nth-child(2), .project-card:nth-child(3) { grid-column: span 5; }
-
-  .card-inner {
-    padding: 3.5rem 3rem;
-    height: 100%;
-    min-height: 480px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    z-index: 2;
-    position: relative;
-  }
-
-  .card-bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    opacity: 0.15;
-    transition: opacity 0.6s ease, transform 0.8s ease;
-    filter: grayscale(80%);
-  }
-
-  /* Degradado para asegurar que el texto sea siempre legible sobre la imagen */
-  .card-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, transparent 0%, var(--bg) 100%);
-    opacity: 0.8;
-  }
-
-  .project-card:hover .card-bg {
-    opacity: 0.4;
-    transform: scale(1.08);
-    filter: grayscale(0%);
-  }
-
-  .card-accent {
-    width: 40px;
-    height: 3px;
-    margin-bottom: 2rem;
-    border-radius: 3px;
-    transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-
-  .project-card:hover .card-accent { width: 100px; }
-
-  .card-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(2rem, 3vw, 2.5rem);
-    line-height: 1.1;
-    margin-bottom: 1rem;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-  }
-
-  .card-desc {
-    font-size: 1rem;
-    color: #cccccc;
-    max-width: 400px;
-    margin-bottom: 2rem;
-    line-height: 1.6;
-  }
-
-  /* Etiquetas estilo píldora */
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .tag {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.5rem 1rem;
-    border-radius: 100px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border);
-    color: var(--text);
-    backdrop-filter: blur(5px);
-  }
-
-  .card-cta {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: auto;
-    padding-top: 2rem;
-    transition: gap 0.3s;
-  }
-
-  .project-card:hover .card-cta {
-    gap: 1rem;
-  }
-
-  /* Colores por proyecto */
-  .p1 { --c: var(--accent3); } .p1 .card-accent { background: var(--c); } .p1 .card-cta { color: var(--c); }
-  .p2 { --c: var(--accent2); } .p2 .card-accent { background: var(--c); } .p2 .card-cta { color: var(--c); }
-  .p3 { --c: var(--accent1); } .p3 .card-accent { background: var(--c); } .p3 .card-cta { color: var(--c); }
-  .p4 { --c: var(--accent4); } .p4 .card-accent { background: var(--c); } .p4 .card-cta { color: var(--c); }
-
-  /* ---- SOBRE MÍ ---- */
-  .about-strip {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6vw;
-    align-items: center;
-    border-top: 1px solid var(--border);
-    background: var(--surface);
-  }
-
-  .about-strip h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    font-weight: 800;
-    line-height: 1.05;
-  }
-
-  .about-strip em {
-    font-style: normal;
-    color: var(--muted);
-  }
-
-  .about-text p {
-    font-size: 1.15rem;
-    line-height: 1.8;
-  }
-
-  /* ---- CONTACTO ---- */
-  .contact-section {
-    text-align: center;
-    background: var(--bg);
-    border-top: 1px solid var(--border);
-    padding: 10rem 6vw;
-  }
-
-  .contact-title {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(4rem, 12vw, 9rem);
-    font-weight: 800;
-    margin-bottom: 2rem;
-    display: inline-block;
-    color: var(--text);
-    text-decoration: none;
-    transition: transform 0.4s, opacity 0.4s;
-    letter-spacing: -0.04em;
-  }
-
-  .contact-title:hover { 
-    opacity: 0.8;
-    transform: scale(0.98);
-  }
-
-  .social-links {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .social-links p {
-    color: var(--muted);
-    font-size: 1rem;
-  }
-
-  /* ---- FOOTER ---- */
-  footer {
-    padding: 3rem 6vw;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--muted);
-    font-size: 0.85rem;
-    border-top: 1px solid var(--border);
-    background: var(--surface);
-  }
-
-  /* ---- ANIMACIONES ---- */
-  [data-reveal] {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-
-  [data-reveal].visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  @media (max-width: 900px) {
-    .project-card:nth-child(n) { grid-column: span 12; }
-    .about-strip { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
-    .card-inner { padding: 2.5rem; min-height: 400px; }
-    .hero { padding-top: 10rem; }
-    footer { flex-direction: column; gap: 1rem; text-align: center; }
-  }
+  .proj-preview, .proj-arrow { display: none; }
+  .about-section { grid-template-columns: 1fr; }
+  .about-right { padding: 5rem 5vw; }
+  .nav-links, .nav-cta { display: none; }
+  .section-count { display: none; }
+}
 </style>
 </head>
 <body>
 
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
 <nav>
-  <div class="nav-logo">PORTFOLIO.</div>
+  <div class="nav-logo">Port<span>.</span></div>
   <ul class="nav-links">
     <li><a href="#proyectos">Proyectos</a></li>
     <li><a href="#sobre">Sobre mí</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
+  <a href="https://github.com/JuanMiguel01" class="nav-cta" target="_blank">GitHub ↗</a>
 </nav>
 
 <section class="hero">
-  <div data-reveal>
-    <p class="hero-tag">Desarrollo Web & Sistemas Digitales</p>
-    <h1>Soluciones<br><em>Digitales</em><br>de alto impacto.</h1>
-    <p class="hero-sub">Especializado en transformar procesos complejos en herramientas simples, escalables y visualmente impecables.</p>
+  <div class="hero-left">
+    <div class="hero-eyebrow" data-reveal>
+      <div class="hero-eyebrow-line"></div>
+      <span>Desarrollo Web · Sistemas Digitales</span>
+    </div>
+    <h1 class="hero-h1" data-reveal data-reveal-delay="1">
+      Soluciones<br>
+      <span class="italic">que</span><br>
+      <span class="accent-word">resuelven.</span>
+    </h1>
+    <p class="hero-desc" data-reveal data-reveal-delay="2">
+      Especializado en transformar procesos complejos en herramientas simples, escalables y visualmente impecables.
+    </p>
+    <div class="hero-stats" data-reveal data-reveal-delay="3">
+      <div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">Proyectos</div>
+      </div>
+      <div>
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Industrias</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Personalizados</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&q=70" alt="Código">
+      <div class="hero-visual-label">— Desarrollo a medida</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
   </div>
 </section>
 
-<section class="section" id="proyectos">
-  <div data-reveal>
-    <p class="section-label">Trabajos Seleccionados</p>
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span>Ficha Clínica</span><span class="dot">·</span>
+    <span>Sistema POS</span><span class="dot">·</span>
+    <span>Wuara Media</span><span class="dot">·</span>
+    <span>Panadería Digital</span><span class="dot">·</span>
+    <span>React</span><span class="dot">·</span>
+    <span>Supabase</span><span class="dot">·</span>
+    <span>Dashboards</span><span class="dot">·</span>
+    <span>UX / UI</span><span class="dot">·</span>
+    <span>Ficha Clínica</span><span class="dot">·</span>
+    <span>Sistema POS</span><span class="dot">·</span>
+    <span>Wuara Media</span><span class="dot">·</span>
+    <span>Panadería Digital</span><span class="dot">·</span>
+    <span>React</span><span class="dot">·</span>
+    <span>Supabase</span><span class="dot">·</span>
+    <span>Dashboards</span><span class="dot">·</span>
+    <span>UX / UI</span><span class="dot">·</span>
   </div>
-  
-  <div class="projects-grid">
-    <a href="proyecto1-ficha-clinica.html" class="project-card p1" data-reveal>
-      <div class="card-bg" style="background-image:url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=900&q=60')"></div>
-      <div class="card-inner">
-        <div>
-          <div class="card-accent"></div>
-          <p style="font-size:0.75rem; font-weight:700; color:rgba(255,255,255,0.6); margin-bottom:1rem; letter-spacing:0.1em;">01 / SALUD</p>
-          <h2 class="card-title">Ficha Clínica Dermatológica</h2>
-          <p class="card-desc">Digitalización total de historiales médicos con red social privada para especialistas.</p>
-          <div class="tags">
-            <span class="tag">Supabase</span> <span class="tag">React</span> <span class="tag">Comunidad</span>
-          </div>
+</div>
+
+<section class="projects-section" id="proyectos">
+  <div class="section-header" data-reveal>
+    <div>
+      <p class="section-label">Trabajos Seleccionados</p>
+      <h2 class="section-title">Proyectos<br><em>destacados</em></h2>
+    </div>
+    <div class="section-count">04</div>
+  </div>
+
+  <div class="projects-list">
+
+    <a href="proyecto1-ficha-clinica.html" class="project-item" data-reveal>
+      <div class="proj-num">01</div>
+      <div class="proj-info">
+        <div class="proj-title">Ficha Clínica Dermatológica</div>
+        <div class="proj-sub">Digitalización total de historiales médicos con red social privada para especialistas.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Salud</span>
+          <span class="proj-tag">Supabase</span>
+          <span class="proj-tag">React</span>
+          <span class="proj-tag">Comunidad</span>
         </div>
-        <span class="card-cta">Explorar caso de estudio ↗</span>
       </div>
+      <div class="proj-preview">
+        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=60" alt="Ficha Clínica">
+      </div>
+      <div class="proj-arrow">Ver caso →</div>
     </a>
 
-    <a href="proyecto2-ferreteria-pos.html" class="project-card p2" data-reveal>
-      <div class="card-bg" style="background-image:url('https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=700&q=60')"></div>
-      <div class="card-inner">
-        <div>
-          <div class="card-accent"></div>
-          <p style="font-size:0.75rem; font-weight:700; color:rgba(255,255,255,0.6); margin-bottom:1rem; letter-spacing:0.1em;">02 / COMERCIO</p>
-          <h2 class="card-title">Ferretería POS & Stock</h2>
-          <p class="card-desc">Sistema punto de venta con control de inventario inteligente y analíticas en tiempo real.</p>
-          <div class="tags">
-            <span class="tag">Inventario</span> <span class="tag">Dashboard</span>
-          </div>
+    <a href="proyecto2-ferreteria-pos.html" class="project-item" data-reveal>
+      <div class="proj-num">02</div>
+      <div class="proj-info">
+        <div class="proj-title">Ferretería POS & Stock</div>
+        <div class="proj-sub">Sistema punto de venta con control de inventario inteligente y analíticas en tiempo real.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Comercio</span>
+          <span class="proj-tag">Inventario</span>
+          <span class="proj-tag">Dashboard</span>
         </div>
-        <span class="card-cta">Explorar caso de estudio ↗</span>
       </div>
+      <div class="proj-preview">
+        <img src="https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=600&q=60" alt="Ferretería POS">
+      </div>
+      <div class="proj-arrow">Ver caso →</div>
     </a>
 
-    <a href="proyecto3-wuara-media.html" class="project-card p3" data-reveal>
-      <div class="card-bg" style="background-image:url('logowuara.jpg')"></div>
-      <div class="card-inner">
-        <div>
-          <div class="card-accent"></div>
-          <p style="font-size:0.75rem; font-weight:700; color:rgba(255,255,255,0.6); margin-bottom:1rem; letter-spacing:0.1em;">03 / MEDIA</p>
-          <h2 class="card-title">Wuara Media Reality</h2>
-          <p class="card-desc">Plataforma de gestión de castings y patrocinios para el primer reality show de Cuba.</p>
-          <div class="tags">
-            <span class="tag">Entretenimiento</span> <span class="tag">Multilingüe</span>
-          </div>
+    <a href="proyecto3-wuara-media.html" class="project-item" data-reveal>
+      <div class="proj-num">03</div>
+      <div class="proj-info">
+        <div class="proj-title">Wuara Media Reality</div>
+        <div class="proj-sub">Plataforma de gestión de castings y patrocinios para el primer reality show de Cuba.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Media</span>
+          <span class="proj-tag">Entretenimiento</span>
+          <span class="proj-tag">Multilingüe</span>
         </div>
-        <span class="card-cta">Explorar caso de estudio ↗</span>
       </div>
+      <div class="proj-preview">
+        <img src="https://images.unsplash.com/photo-1492724724894-7464c27d0ceb?w=600&q=60" alt="Wuara Media">
+      </div>
+      <div class="proj-arrow">Ver caso →</div>
     </a>
 
-    <a href="proyecto4-panaderia-digital.html" class="project-card p4" data-reveal>
-      <div class="card-bg" style="background-image:url('https://images.unsplash.com/photo-1509440159596-0249088772ff?w=900&q=60')"></div>
-      <div class="card-inner">
-        <div>
-          <div class="card-accent"></div>
-          <p style="font-size:0.75rem; font-weight:700; color:rgba(255,255,255,0.6); margin-bottom:1rem; letter-spacing:0.1em;">04 / INDUSTRIAL</p>
-          <h2 class="card-title">Panadería Digital</h2>
-          <p class="card-desc">Control total de producción, mermas e insumos con gestión granular de permisos.</p>
-          <div class="tags">
-            <span class="tag">Producción</span> <span class="tag">Roles</span>
-          </div>
+    <a href="proyecto4-panaderia-digital.html" class="project-item" data-reveal>
+      <div class="proj-num">04</div>
+      <div class="proj-info">
+        <div class="proj-title">Panadería Digital</div>
+        <div class="proj-sub">Control total de producción, mermas e insumos con gestión granular de permisos.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Industrial</span>
+          <span class="proj-tag">Producción</span>
+          <span class="proj-tag">Roles</span>
         </div>
-        <span class="card-cta">Explorar caso de estudio ↗</span>
       </div>
+      <div class="proj-preview">
+        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&q=60" alt="Panadería Digital">
+      </div>
+      <div class="proj-arrow">Ver caso →</div>
     </a>
+
   </div>
 </section>
 
-<section class="section about-strip" id="sobre">
-  <div data-reveal>
-    <h2>Construyo<br>productos que<br><em>resuelven.</em></h2>
+<section class="about-section" id="sobre">
+  <div class="about-left" data-reveal>
+    <p class="section-label">Sobre mí</p>
+    <h2 class="about-title">
+      Construyo<br>productos que<br><em>resuelven.</em>
+    </h2>
+    <div class="skill-grid">
+      <div class="skill-item">
+        <div class="skill-name">Frontend</div>
+        <div class="skill-desc">React, HTML/CSS, animaciones y UX de alto nivel</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Backend</div>
+        <div class="skill-desc">Supabase, bases de datos, auth y APIs REST</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Diseño</div>
+        <div class="skill-desc">Interfaces que son un placer usar cada día</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Negocio</div>
+        <div class="skill-desc">Entender el problema antes de escribir código</div>
+      </div>
+    </div>
   </div>
-  <div class="about-text" data-reveal>
-    <p style="margin-bottom:1.5rem">Mi enfoque no es solo escribir código, sino entender el negocio. He ayudado a médicos, dueños de ferreterías y equipos de producción a eliminar el papel y digitalizar su éxito.</p>
-    <p style="color:var(--muted)">Cada proyecto es una oportunidad para crear un sistema robusto que sea un placer usar todos los días.</p>
-  </div>
-</section>
-
-<section class="section contact-section" id="contacto">
-  <div data-reveal>
-    <a href="https://github.com/JuanMiguel01" class="contact-title" target="_blank">GitHub.</a>
-    <div class="social-links">
-      <p>Explora el código fuente de mis proyectos públicos.</p>
+  <div class="about-right" data-reveal>
+    <div class="about-body">
+      <p>Mi enfoque no es solo escribir código — sino entender el negocio. He ayudado a médicos, dueños de ferreterías y equipos de producción a eliminar el papel y digitalizar su éxito.</p>
+      <p>Cada proyecto es una oportunidad para crear un sistema robusto que sea un placer usar todos los días. No vendo plantillas; construyo soluciones que duran.</p>
     </div>
   </div>
 </section>
 
+<section class="contact-section" id="contacto">
+  <p class="contact-pre" data-reveal>¿Tienes un proyecto en mente?</p>
+  <a href="https://github.com/JuanMiguel01" class="contact-big" target="_blank" data-reveal>
+    Hablemos<em>.</em>
+  </a>
+  <p class="contact-sub" data-reveal>Explora el código fuente de mis proyectos públicos en GitHub.</p>
+  <div data-reveal>
+    <a href="https://github.com/JuanMiguel01" class="btn-github" target="_blank">
+      <span>→ Ver GitHub</span>
+    </a>
+  </div>
+</section>
+
 <footer>
-  <p>© 2025–2026 — Portfolio</p>
-  <p>Construido con enfoque en rendimiento y claridad.</p>
+  <div class="footer-logo">Port<span>.</span></div>
+  <p class="footer-copy">© 2025–2026 — Construido con enfoque en rendimiento y claridad.</p>
 </footer>
 
 <script>
-  // Observador para animaciones de entrada (ajustado para mayor fluidez)
-  const observerOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        // Opcional: Descomenta la siguiente línea si quieres que la animación ocurra solo una vez
-        // observer.unobserve(entry.target); 
-      }
-    });
-  }, observerOptions);
+  // Cursor personalizado
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
 
-  document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
+  });
+
+  function animateRing() {
+    rx += (mx - rx - 18) * 0.12;
+    ry += (my - ry - 18) * 0.12;
+    ring.style.transform = `translate(${rx}px, ${ry}px)`;
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  // Reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('[data-reveal]').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Hero auto-reveal
+  document.querySelectorAll('.hero [data-reveal]').forEach(el => {
+    setTimeout(() => el.classList.add('visible'), 200);
+  });
+
+  // Duplicar marquee para loop continuo
+  const track = document.querySelector('.marquee-track');
+  track.innerHTML += track.innerHTML;
 </script>
-
 </body>
 </html>
